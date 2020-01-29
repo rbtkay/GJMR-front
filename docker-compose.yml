@@ -1,0 +1,14 @@
+version: '3.6'
+services:
+   nodejs:
+     container_name: project_react
+     image: 'node:latest'
+     working_dir: /home/node/app
+     command:
+        - /bin/sh
+        - '-c'
+        - 'npm install && npm start'
+     ports:
+        - '4200:3000'
+     volumes:
+        - './:/home/node/app'
