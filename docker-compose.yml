@@ -11,4 +11,4 @@ services:
      ports:
         - '4200:3000'
      volumes:
-        - './gjmr/:/home/node/app'
+        - './feedback-ecole-ipssi/:/home/node/app'
