@@ -16,6 +16,6 @@ coverage
 # production
 build
 # compiled style
-src/styles/style.css
-src/styles/style.css.map
+gjmr/src/styles/style.css
+gjmr/src/styles/style.css.map
 
