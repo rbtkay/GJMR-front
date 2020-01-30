@@ -1,0 +1,21 @@
+# dependencies
+node_modules
+package-lock.json
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+# IDE
+.idea
+.vscode
+# testing
+coverage
+# production
+build
+# compiled style
+gjmr/src/styles/style.css
+gjmr/src/styles/style.css.map
+
