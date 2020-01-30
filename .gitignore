@@ -1,6 +1,6 @@
 # dependencies
-gjmr/node_modules
-gjmr/package-lock.json
+node_modules
+package-lock.json
 # misc
 .DS_Store
 .env.local
@@ -12,10 +12,10 @@ npm-debug.log*
 .idea
 .vscode
 # testing
-gjmr/coverage
+coverage
 # production
-gjmr/build
+build
 # compiled style
-gjmr/src/styles/style.css
-gjmr/src/styles/style.css.map
+src/styles/style.css
+src/styles/style.css.map
 
