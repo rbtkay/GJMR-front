@@ -1,4 +1,4 @@
-# GJMR-front
+# feedback-ecole-ipssi-front
 ## To launch project : 
 To start docker container :
 ```
