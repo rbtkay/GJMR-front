@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
-class userRouter extends Component {
+class Router extends Component {
     render() {
         return (
             <Switch>
+                {/* Login */}
+                <Route exact path="/login"></Route>
+                <Route exact path="/logout"></Route>
                 {/* Student */}
                 <Route exact path="/student/dashboard"></Route>
                 <Route exact path="/student/modules/:id"></Route>
@@ -21,3 +24,5 @@ class userRouter extends Component {
         );
     }
 }
+
+export default Router;
