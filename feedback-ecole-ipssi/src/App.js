@@ -7,13 +7,18 @@ import Router from "./components/Router";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 // actions
-// import { setUser, setLog } from './reducer/actions';
+import { setUser, setLog } from './reducer/actions';
 
 class App extends Component {
 
-    componentDidMount() {
-        if (this.props.location.pathname !== "/login" && !this.props.user) {
-            this.props.history.push("/login");
+    UNSAFE_componentWillMount() {
+        user = JSON.parse(localStorage.getItem(STORED_USER));
+        if (!user) {
+            if(this.props.location.pathname !== "/login"){
+                this.props.history.push("/login");
+            }
+        }else{
+            this.props.setUser(user);
         }
     }
 
@@ -21,7 +26,7 @@ class App extends Component {
         return (
             <div className="app">
                 {this.props.user ? <Header user={this.props.user} /> : null}
-                <Router user={this.props.user} />
+                <Router />
                 <Footer />
             </div>
         );
@@ -33,8 +38,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    // setUser,
-    // setLog
+    setUser,
+    setLog
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

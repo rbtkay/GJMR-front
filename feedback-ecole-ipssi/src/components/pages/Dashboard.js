@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 // component
-import Form from '../form/Form';
+// import Form from '../form/Form';
 // actions
 import { setUser, setLog } from '../../reducer/actions';
 // functions
@@ -22,7 +22,7 @@ class Dashboard extends Component {
 
     UNSAFE_componentWillMount(){
         if(this.props.user.role !== this.props.match.params.role){
-            this.props.history.push(`/${user.role}/dashboard`);
+            this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
 

@@ -24,6 +24,12 @@ class Login extends Component {
         this.responseManagment = responseManagment.bind(this);
     }
 
+    UNSAFE_componentWillMount(){
+        if(this.props.user){
+            this.props.history.push(`/${this.props.user.role}/dashboard`);
+        }
+    }
+
     // Use form values to get User information from API
     async connection(value) {
         this.setState({ loading: true });

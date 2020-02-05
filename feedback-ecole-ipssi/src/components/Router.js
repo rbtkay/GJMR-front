@@ -6,7 +6,7 @@ import { withRouter } from "react-router";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Dashboard from "./pages/Dashboard";
-import Module from "./pages/Module";
+// import Module from "./pages/Module";
 
 class Router extends Component {
     render() {
@@ -23,7 +23,7 @@ class Router extends Component {
                     <Dashboard/>
                 </Route>
                 <Route exact path="/:role/modules/:id">
-                    <Module/>
+                    {/* <Module/> */}
                 </Route>
                 {/* 
                 <Route exact path="/student/dashboard"></Route>
