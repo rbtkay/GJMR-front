@@ -1,23 +1,32 @@
+import { API_URL } from "../constants";
+
 /**
- *
+ * Build and process fetch request
  * @param {string} url
  * @param {string} token
- * @param {string} method
- * @param {object} body
+ * @param {object} options
  */
-export function request(url, token, method = "GET", body) {
-    return fetch(API_URL + url, {
-        method,
-        body,
-        headers: token ? { Authorization: token } : null
-    })
-        .then(response => response.json())
+export function request(url, options, token) {
+    options.headers = {};
+    if (options.body) {
+        options.headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(options.body);
+    }
+    if (token) {
+        options.headers["Authorization"] = token;
+    }
+    return fetch(API_URL + url, options)
+        .then(response =>
+            response.json().then(result => {
+                result.status = response.status;
+                return result;
+            })
+        )
         .catch(error => error);
 }
 
 /**
  * Manage ajax response
- *
  * @param {object} response
  * Required to bind "this"
  * @returns {boolean}
@@ -33,7 +42,6 @@ export function responseManagment(response) {
 
 /**
  * Manage ajax response errors
- *
  * @param {object} response
  * Required to bind "this"
  * Required to "setLog"
@@ -41,12 +49,13 @@ export function responseManagment(response) {
 export function responseErrorManagment(response) {
     if (response.message) {
         console.error(`Erreur ${response.status} : ${response.message}`);
-        this.setLog({
+        this.props.setLog({
             type: "error",
             message: response.message
         });
     } else {
-        this.setLog({
+        console.error("La connexion avec le serveur n' a pas pu être effectuée");
+        this.props.setLog({
             type: "error",
             message: "Une erreur est survenue."
         });

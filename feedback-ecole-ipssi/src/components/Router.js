@@ -1,13 +1,22 @@
+// modules
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router";
+// components
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 
 class Router extends Component {
     render() {
         return (
             <Switch>
                 {/* Login */}
-                <Route exact path="/login"></Route>
-                <Route exact path="/logout"></Route>
+                <Route exact path="/login">
+                    <Login/>
+                </Route>
+                <Route exact path="/logout">
+                    <Logout/>
+                </Route>
                 {/* Student */}
                 <Route exact path="/student/dashboard"></Route>
                 <Route exact path="/student/modules/:id"></Route>
@@ -25,4 +34,4 @@ class Router extends Component {
     }
 }
 
-export default Router;
+export default withRouter(Router);

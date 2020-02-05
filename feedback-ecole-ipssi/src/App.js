@@ -1,27 +1,40 @@
 // modules
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 // components
 import Router from "./components/Router";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+// actions
+// import { setUser, setLog } from './reducer/actions';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {};
+    componentDidMount() {
+        if (this.props.location.pathname !== "/login" && !this.props.user) {
+            this.props.history.push("/login");
+        }
     }
 
     render() {
         return (
-            <div className="App">
-                {this.state.user ? <Header user={this.state.user} /> : null}
-                <Router user={this.state.user} />
+            <div className="app">
+                {this.props.user ? <Header user={this.props.user} /> : null}
+                <Router user={this.props.user} />
                 <Footer />
             </div>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return { user: state.user }
+}
+
+const mapDispatchToProps = {
+    // setUser,
+    // setLog
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
