@@ -5,6 +5,8 @@ import { withRouter } from "react-router";
 // components
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import Dashboard from "./pages/Dashboard";
+import Module from "./pages/Module";
 
 class Router extends Component {
     render() {
@@ -17,18 +19,23 @@ class Router extends Component {
                 <Route exact path="/logout">
                     <Logout/>
                 </Route>
-                {/* Student */}
+                <Route exact path="/:role/dashboard">
+                    <Dashboard/>
+                </Route>
+                <Route exact path="/:role/modules/:id">
+                    <Module/>
+                </Route>
+                {/* 
                 <Route exact path="/student/dashboard"></Route>
                 <Route exact path="/student/modules/:id"></Route>
-                {/* Teacher */}
                 <Route exact path="/teacher/dashboard"></Route>
                 <Route exact path="/teacher/modules/:id"></Route>
-                {/* Admin */}
                 <Route exact path="/admin/dashboard"></Route>
                 <Route exact path="/admin/modules"></Route>
                 <Route exact path="/admin/students"></Route>
                 <Route exact path="/admin/teachers"></Route>
-                <Route exact path="/admin/school-years"></Route>
+                <Route exact path="/admin/school-years"></Route> 
+                */}
             </Switch>
         );
     }

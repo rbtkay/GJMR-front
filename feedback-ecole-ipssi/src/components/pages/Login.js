@@ -1,16 +1,16 @@
 // module
 import React, { Component } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
 // import jwt from 'jsonwebtoken';
 // component
-import Form from '../form/Form';
+import Form from "../form/Form";
 // actions
-import { setUser, setLog } from '../../reducer/actions';
+import { setUser, setLog } from "../../reducer/actions";
 // functions
-import {request, responseManagment} from '../../functions/fetch'
-// const 
-import {STORED_USER} from '../../constants';
+import { request, responseManagment } from "../../functions/fetch";
+// const
+import { STORED_USER } from "../../constants";
 
 class Login extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class Login extends Component {
 
         this.state = {
             loading: false
-        }
+        };
 
         this.connection = this.connection.bind(this);
         this.responseManagment = responseManagment.bind(this);
@@ -41,24 +41,25 @@ class Login extends Component {
 
     // Get Token from API
     async getToken(body) {
-        let response = await request(`/user/login`, {method: 'POST', body});
-        if (this.responseManagment(response)) return response;  
+        let response = await request(`/user/login`, { method: "POST", body });
+        if (this.responseManagment(response)) return response;
         return null;
     }
 
     render() {
         return (
-            <div className="login">
+            <main className="login">
+                <h1>Connexion</h1>
                 <Form
                     form_items={[
                         {
-                            type: 'text',
+                            type: "text",
                             name: "email",
                             label: "Identifiant",
                             required: true
                         },
                         {
-                            type: 'password',
+                            type: "password",
                             name: "password",
                             label: "Mot de passe",
                             required: true
@@ -66,14 +67,14 @@ class Login extends Component {
                     ]}
                     callback={this.connection}
                 />
-            </div>
+            </main>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return { user: state.user }
-}
+const mapStateToProps = state => {
+    return { user: state.user };
+};
 
 const mapDispatchToProps = {
     setUser,
