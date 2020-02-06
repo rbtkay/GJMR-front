@@ -1,13 +1,14 @@
 // module
 import React, { Component } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
 // component
 // import Form from '../form/Form';
+import Loading from "../Loading";
 // actions
-import { setUser, setLog } from '../../reducer/actions';
+import { setUser, setLog } from "../../reducer/actions";
 // functions
-import {request, responseManagment} from '../../functions/fetch'
+import { request, responseManagment } from "../../functions/fetch";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -15,13 +16,13 @@ class Dashboard extends Component {
 
         this.state = {
             loading: false
-        }
+        };
 
         this.responseManagment = responseManagment.bind(this);
     }
 
-    UNSAFE_componentWillMount(){
-        if(this.props.user.role !== this.props.match.params.role){
+    UNSAFE_componentWillMount() {
+        if (this.props.user.role !== this.props.match.params.role) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
@@ -37,13 +38,15 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return { user: state.user }
-}
+const mapStateToProps = state => {
+    return { user: state.user };
+};
 
 const mapDispatchToProps = {
     setUser,
     setLog
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+);

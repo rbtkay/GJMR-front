@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 // import jwt from 'jsonwebtoken';
 // component
 import Form from "../form/Form";
+import Loading from "../Loading";
 // actions
 import { setUser, setLog } from "../../reducer/actions";
 // functions
@@ -24,8 +25,8 @@ class Login extends Component {
         this.responseManagment = responseManagment.bind(this);
     }
 
-    UNSAFE_componentWillMount(){
-        if(this.props.user){
+    UNSAFE_componentWillMount() {
+        if (this.props.user) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
@@ -34,7 +35,7 @@ class Login extends Component {
     async connection(body) {
         this.setState({ loading: true });
         let response = await request(`/user/login`, { method: "POST", body });
-        if (this.responseManagment(response)){
+        if (this.responseManagment(response)) {
             let user = response;
             delete user.status;
             this.props.setUser(user);
@@ -49,23 +50,27 @@ class Login extends Component {
         return (
             <main className="login">
                 <h1>Connexion</h1>
-                <Form
-                    form_items={[
-                        {
-                            type: "text",
-                            name: "email",
-                            label: "Identifiant",
-                            required: true
-                        },
-                        {
-                            type: "password",
-                            name: "password",
-                            label: "Mot de passe",
-                            required: true
-                        }
-                    ]}
-                    callback={this.connection}
-                />
+                {this.state.loading ? (
+                    <Loading />
+                ) : (
+                    <Form
+                        form_items={[
+                            {
+                                type: "text",
+                                name: "email",
+                                label: "Identifiant",
+                                required: true
+                            },
+                            {
+                                type: "password",
+                                name: "password",
+                                label: "Mot de passe",
+                                required: true
+                            }
+                        ]}
+                        callback={this.connection}
+                    />
+                )}
             </main>
         );
     }
