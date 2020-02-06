@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 // component
 // import Form from '../form/Form';
+import ModuleTeaser from "../ModuleTeaser";
 import Loading from "../Loading";
 // actions
 import { setUser, setLog } from "../../reducer/actions";
@@ -15,7 +16,8 @@ class Dashboard extends Component {
         super(props);
 
         this.state = {
-            loading: false
+            loading: false,
+            modules: null
         };
 
         this.responseManagment = responseManagment.bind(this);
@@ -25,6 +27,17 @@ class Dashboard extends Component {
         if (this.props.user.role !== this.props.match.params.role) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
+        this.getModules();
+    }
+
+    async getModules() {
+        this.setState({ loading: true });
+        let response = await request(`/modules`, this.props.user.token);
+        console.log(response);
+        if (response) {
+            this.setState({ modules: response });
+        }
+        this.setState({ loading: false });
     }
 
     render() {
@@ -32,6 +45,15 @@ class Dashboard extends Component {
             <main className="dashboard">
                 <h1>Tableau de Bord</h1>
                 <section className="module-list">
+                    {this.state.loading ? (
+                        <Loading />
+                    ) : this.state.modules.length ? (
+                        <ul className="modules">
+                            {this.state.modules.map((module, i) => (
+                                <ModuleTeaser module={module} key={i} />
+                            ))}
+                        </ul>
+                    ) : null}
                 </section>
             </main>
         );

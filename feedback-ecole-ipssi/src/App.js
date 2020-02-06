@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 // components
 import Router from "./components/Router";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 // actions
 import { setUser, setLog } from './reducer/actions';
 // const

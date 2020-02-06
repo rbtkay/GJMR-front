@@ -34,7 +34,11 @@ class Login extends Component {
     // Use form values to get User information from API
     async connection(body) {
         this.setState({ loading: true });
-        let response = await request(`/user/login`, { method: "POST", body });
+        let response = await request(
+            `/user/login`,
+            undefined, 
+            { method: "POST", body }
+        );
         if (this.responseManagment(response)) {
             let user = response;
             delete user.status;
