@@ -32,12 +32,32 @@ class Dashboard extends Component {
 
     async getModules() {
         this.setState({ loading: true });
-        let response = await request(`/modules`, this.props.user.token);
+        const response = await request(`/modules`, this.props.user.token);
         console.log(response);
-        if (response) {
-            this.setState({ modules: response });
+        if (this.responseManagment(response)) {
+            this.setState({ modules: response.result });
+            this.getTeachersModules(response.result);
         }
         this.setState({ loading: false });
+    }
+
+    async getTeachersModules(modules) {
+        let teachers_id = modules.map(module => module.teacher_id);
+        teachers_id = teachers_id.filter((id, i) => teachers_id.indexOf(id) === i); // distinct
+        const response = await request(`/users`, this.props.user.token, {
+            method: "POST",
+            body: teachers_id
+        });
+        console.log(response);
+        if (this.responseManagment(response)) {
+            modules = modules.map(module => {
+                module.teacher = response.result.filter(
+                    teacher => teacher._id === module.teacher_id
+                )[0];
+                return module;
+            });
+            this.setState({ modules });
+        }
     }
 
     render() {
