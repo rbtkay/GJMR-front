@@ -9,10 +9,10 @@ class Form extends Component {
         super(props);
 
         this.state = {};
-        props.form_items.map(form_item => {
-            this.state[form_item.name] = "";
+        this.initialState = {};
+        props.form_items.forEach(form_item => {
+            this.initialState[form_item.name] = "";
         });
-        this.initialState = { ...this.state };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,7 +43,7 @@ class Form extends Component {
                         <FormItem
                             key={i}
                             input={form_item}
-                            value={this.state[form_item.name]}
+                            value={this.state[form_item.name] || ""}
                             callback={this.handleChange}
                         />
                     ))}

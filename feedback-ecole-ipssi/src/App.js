@@ -8,11 +8,13 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 // actions
 import { setUser, setLog } from './reducer/actions';
+// const
+import { STORED_USER } from "./constants";
 
 class App extends Component {
 
     UNSAFE_componentWillMount() {
-        user = JSON.parse(localStorage.getItem(STORED_USER));
+        const user = JSON.parse(localStorage.getItem(STORED_USER));
         if (!user) {
             if(this.props.location.pathname !== "/login"){
                 this.props.history.push("/login");

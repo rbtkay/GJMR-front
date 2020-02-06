@@ -1,18 +1,17 @@
 // modules
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 // actions
-import {removeUser} from '../../reducer';
+import { removeUser } from "../../reducer/actions";
 // const
 import { STORED_USER } from "../../constants";
 
 class Logout extends Component {
-
     UNSAFE_componentWillMount() {
         this.props.removeUser();
         localStorage.removeItem(STORED_USER);
-        this.props.history.push('/login');
+        this.props.history.push("/login");
     }
 
     render() {
@@ -25,4 +24,4 @@ class Logout extends Component {
     }
 }
 
-export default withRouter(connect(null, {removeUser})(Logout));
+export default withRouter(connect(null, { removeUser })(Logout));
