@@ -24,8 +24,9 @@ class Login extends Component {
         this.responseManagment = responseManagment.bind(this);
     }
 
-    UNSAFE_componentWillMount(){
-        if(this.props.user){
+    UNSAFE_componentWillMount() {
+        console.log(this.props);
+        if (this.props.user) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
@@ -48,6 +49,7 @@ class Login extends Component {
     // Get Token from API
     async getToken(body) {
         let response = await request(`/user/login`, { method: "POST", body });
+
         if (this.responseManagment(response)) return response;
         return null;
     }

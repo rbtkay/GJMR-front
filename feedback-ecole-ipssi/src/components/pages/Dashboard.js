@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 // actions
 import { setUser, setLog } from '../../reducer/actions';
 // functions
-import {request, responseManagment} from '../../functions/fetch'
+import { request, responseManagment } from '../../functions/fetch'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -20,8 +20,8 @@ class Dashboard extends Component {
         this.responseManagment = responseManagment.bind(this);
     }
 
-    UNSAFE_componentWillMount(){
-        if(this.props.user.role !== this.props.match.params.role){
+    UNSAFE_componentWillMount() {
+        if (this.props.user.role !== this.props.match.params.role) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
@@ -31,6 +31,7 @@ class Dashboard extends Component {
             <main className="dashboard">
                 <h1>Tableau de Bord</h1>
                 <section className="module-list">
+                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/addStudent`) }}>+</button>
                 </section>
             </main>
         );
