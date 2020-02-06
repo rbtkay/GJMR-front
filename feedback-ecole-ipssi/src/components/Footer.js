@@ -1,7 +1,7 @@
 // modules
 import React from "react";
 
-export const Footer = () => (
+const Footer = () => (
     <footer>
         <p>
             © 1998-2020 groupe ip-formation 
@@ -12,3 +12,5 @@ export const Footer = () => (
         </p>
     </footer>
 );
+
+export default Footer;
