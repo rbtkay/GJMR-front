@@ -31,10 +31,10 @@ class Login extends Component {
     }
 
     // Use form values to get User information from API
-    async connection(value) {
+    async connection(body) {
         this.setState({ loading: true });
-        let response = await this.getToken(value);
-        if (response) {
+        let response = await request(`/user/login`, { method: "POST", body });
+        if (this.responseManagment(response)){
             let user = response;
             delete user.status;
             this.props.setUser(user);
@@ -43,13 +43,6 @@ class Login extends Component {
         } else {
             this.setState({ loading: false });
         }
-    }
-
-    // Get Token from API
-    async getToken(body) {
-        let response = await request(`/user/login`, { method: "POST", body });
-        if (this.responseManagment(response)) return response;
-        return null;
     }
 
     render() {
