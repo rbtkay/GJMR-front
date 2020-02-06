@@ -17,10 +17,10 @@ export function request(url, token, options = {}) {
     }
     return fetch(API_URL + url, options)
         .then(response =>
-            response.json().then(result => {
-                result.status = response.status;
-                return result;
-            })
+            response.json().then(result => ({
+                status: response.status,
+                result
+            }))
         )
         .catch(error => error);
 }
@@ -33,6 +33,7 @@ export function request(url, token, options = {}) {
  */
 export function responseManagment(response) {
     if (response.status === 200) {
+        delete response.status;
         return true;
     } else {
         responseErrorManagment.bind(this, response)();
@@ -54,7 +55,9 @@ export function responseErrorManagment(response) {
             message: response.message
         });
     } else {
-        console.error("La connexion avec le serveur n' a pas pu être effectuée");
+        console.error(
+            "La connexion avec le serveur n' a pas pu être effectuée"
+        );
         this.props.setLog({
             type: "error",
             message: "Une erreur est survenue."

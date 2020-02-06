@@ -39,9 +39,9 @@ class Login extends Component {
             undefined, 
             { method: "POST", body }
         );
+        console.log(response);
         if (this.responseManagment(response)) {
-            let user = response;
-            delete user.status;
+            const user = response.result;
             this.props.setUser(user);
             localStorage.setItem(STORED_USER, JSON.stringify(user));
             this.props.history.push(`/${user.role}/dashboard`);
