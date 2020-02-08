@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { withRouter } from "react-router";
 // components
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
-import Dashboard from "./pages/Dashboard";
-import AddUser from "./pages/AddUser";
-import AddModule from "./pages/AddModule";
+import Login from "./login/Login";
+import Logout from "./login/Logout";
+import Dashboard from "./dashboard/Dashboard";
+import AddUser from "./admin/AddUser";
+import AddModule from "./admin/AddModule";
 // import Module from "./pages/Module";
 
 class Router extends Component {
