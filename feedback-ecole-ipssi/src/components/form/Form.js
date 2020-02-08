@@ -11,8 +11,6 @@ class Form extends Component {
 
         this.state = {};
         this.initialState = {};
-
-        // console.log(this.props);
         props.form_items.forEach(form_item => {
             this.initialState[form_item.name] = "";
         });
@@ -39,46 +37,28 @@ class Form extends Component {
     }
 
     render() {
-        // let select_options = this.props.select_options;
-        // let options = <option>Choisir Une Promotion</option>;
-        // if (select_options != null) {
-        //     options = select_options.map((opt) =>
-        //         <option key={opt._id} value={opt._id}>
-        //             {opt.name}
-        //         </option>
-        //     );
-        // }
-        let select_name = "select_name"
-        if (this.props.user_role == "student") {
-            select_name = "select_school_year";
-        }
-        // else if (this.props.user_role == "student") {
-
-        // }
-        // else if (this.props.user_role == "student") {
-
-        // }
-
-        console.log("in the form ", this.props)
         return (
-            <form className="form" id="formid" onSubmit={this.handleSubmit}>
+            <form className="form" onSubmit={this.handleSubmit}>
                 <div className="form-item-list">
-                    {this.props.form_items.map((form_item, i) => (
-                        <FormItem
-                            key={i}
-                            input={form_item}
-                            value={this.state[form_item.name] || ""}
-                            callback={this.handleChange}
-                        />
-                    ))}
+                    {this.props.form_items.map((form_item, i) => {
+                        console.log(form_item)
+                        return form_item.type === "select" ? (
+                            <SelectItem
+                                key={i}
+                                select={form_item}
+                                value={this.state[form_item.name] || ""}
+                                callback={this.handleChange}
+                            />
+                        ) : (
+                            <FormItem
+                                key={i}
+                                input={form_item}
+                                value={this.state[form_item.name] || ""}
+                                callback={this.handleChange}
+                            />
+                        );
+                    })}
                 </div>
-                {/* {this.renderSelect(options)} */}
-                <SelectItem
-                    select_role={this.props.select_role}
-                    options_school_year={this.props.select_school_year}
-                    options_teacher={this.props.select_teacher}
-                    callback={this.handleChange}
-                />
                 <div className="submit-button-wrapper">
                     <button className="btn submit-button" type="submit">
                         Valider
@@ -87,48 +67,11 @@ class Form extends Component {
             </form>
         );
     }
-
-    // renderSelect(options) {
-    //     let user_role = window.location.href.split('-')[1];
-    //     if (user_role == 'student') {
-    //         return (
-    //             <div className="form-item-list">
-    //                 <label>Promotions - </label>
-    //                 <select name="select_options" onChange={this.handleChange}>
-    //                     <option>-</option>
-    //                     {options}
-    //                 </select>
-    //             </div>
-    //         )
-    //     } else if (user_role == 'module') {
-    //         return (
-    //             <div>
-    //                 <div className="form-item-list">
-    //                     <label>Promotion - </label>
-    //                     <select name="select_options" onChange={this.handleChange}>
-    //                         <option>-</option>
-    //                         {options}
-    //                     </select>
-    //                 </div>
-    //                 <div className="form-item-list">
-    //                     <label>Nom de l'intervenant - </label>
-    //                     <select name="select_option_teacher" onChange={this.handleChange}>
-    //                         <option>-</option>
-    //                         {options}
-    //                     </select>
-    //                 </div>
-    //             </div>
-    //         )
-    //     } else {
-    //         return
-    //     }
-    // }
 }
 
-// Form.propTypes = {
-//     form_items: PropTypes.arrayOf(PropTypes.object).isRequired,
-//     select_options: PropTypes,
-//     callback: PropTypes.func.isRequired
-// };
+Form.propTypes = {
+    form_items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    callback: PropTypes.func.isRequired
+};
 
 export default Form;
