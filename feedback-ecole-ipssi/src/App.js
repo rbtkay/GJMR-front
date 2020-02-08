@@ -1,7 +1,7 @@
 // modules
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 // components
 import Router from "./components/Router";
 import Header from "./components/Header";

@@ -1,7 +1,7 @@
 // module
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 // import jwt from 'jsonwebtoken';
 // component
 import Form from "../form/Form";
@@ -27,7 +27,7 @@ class Login extends Component {
 
     UNSAFE_componentWillMount() {
         if (this.props.user) {
-            this.props.history.push(`/${this.props.user.role}/dashboard`);
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
     }
 
@@ -44,18 +44,10 @@ class Login extends Component {
             const user = response.result;
             this.props.setUser(user);
             localStorage.setItem(STORED_USER, JSON.stringify(user));
-            this.props.history.push(`/${user.role}/dashboard`);
+            this.props.history.push(`/dashboard/${user.role}`);
         } else {
             this.setState({ loading: false });
         }
-    }
-
-    // Get Token from API
-    async getToken(body) {
-        let response = await request(`/user/login`, { method: "POST", body });
-
-        if (this.responseManagment(response)) return response;
-        return null;
     }
 
     render() {

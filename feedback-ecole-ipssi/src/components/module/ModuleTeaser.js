@@ -7,6 +7,9 @@ const ModuleTeaser = props => (
         {props.module.teacher ? (
             <span>{" "}{props.module.teacher.last_name}</span>
         ) : null}
+        {props.module.average ? (
+            <span>{" "}{props.module.average}</span>
+        ) : null}
     </li>
 );
 
