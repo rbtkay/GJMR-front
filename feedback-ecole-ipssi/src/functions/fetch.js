@@ -6,7 +6,7 @@ import { API_URL } from "../constants";
  * @param {string} token
  * @param {object} options
  */
-export function request(url, options, token) {
+export function request(url, token, options = {}) {
     options.headers = {};
     if (options.body) {
         options.headers["Content-Type"] = "application/json";
@@ -17,10 +17,10 @@ export function request(url, options, token) {
     }
     return fetch(API_URL + url, options)
         .then(response =>
-            response.json().then(result => {
-                result.status = response.status;
-                return result;
-            })
+            response.json().then(result => ({
+                status: response.status,
+                result
+            }))
         )
         .catch(error => error);
 }
@@ -33,6 +33,7 @@ export function request(url, options, token) {
  */
 export function responseManagment(response) {
     if (response.status === 200) {
+        delete response.status;
         return true;
     } else {
         responseErrorManagment.bind(this, response)();
@@ -54,7 +55,9 @@ export function responseErrorManagment(response) {
             message: response.message
         });
     } else {
-        console.error("La connexion avec le serveur n' a pas pu être effectuée");
+        console.error(
+            "La connexion avec le serveur n' a pas pu être effectuée"
+        );
         this.props.setLog({
             type: "error",
             message: "Une erreur est survenue."

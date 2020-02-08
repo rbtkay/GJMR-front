@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+// components
+import Loading from "../Loading";
 // actions
 import { removeUser } from "../../reducer/actions";
 // const
@@ -18,7 +20,7 @@ class Logout extends Component {
         return (
             <main className="logout">
                 <h1>Déconnexion</h1>
-                {/* TODO : make a loading circle */}
+                <Loading />
             </main>
         );
     }

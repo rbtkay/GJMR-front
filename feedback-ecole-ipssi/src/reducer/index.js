@@ -3,11 +3,10 @@ const initialState = {
     log: null
 };
 
-function reducer(state = initialState, action) {
+const reducer = (state = initialState, action) => {
     let nextState;
 
     switch (action.type) {
-
         case "SET_USER":
             nextState = {
                 ...state,
@@ -19,7 +18,7 @@ function reducer(state = initialState, action) {
             nextState = {
                 ...state,
                 user: null
-            };;
+            };
             return nextState || state;
 
         case "SET_TOKEN":
@@ -49,6 +48,6 @@ function reducer(state = initialState, action) {
         default:
             return state;
     }
-}
+};
 
 export default reducer;

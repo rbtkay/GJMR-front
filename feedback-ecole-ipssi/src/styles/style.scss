@@ -16,5 +16,13 @@ $medium: 500;
 $bold: 600;
 $extra-bold: 700;
 $black: 800;
+// colors
+$dark_blue: #021B48;
+$blue: #0476BB;
+$pink: #E52761;
+
 // font familly
 $font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+// Import
+// ======
+@import "sass/loading";

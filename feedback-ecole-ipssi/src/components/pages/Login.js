@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 // import jwt from 'jsonwebtoken';
 // component
 import Form from "../form/Form";
+import Loading from "../Loading";
 // actions
 import { setUser, setLog } from "../../reducer/actions";
 // functions
@@ -25,19 +26,22 @@ class Login extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        console.log(this.props);
         if (this.props.user) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
 
     // Use form values to get User information from API
-    async connection(value) {
+    async connection(body) {
         this.setState({ loading: true });
-        let response = await this.getToken(value);
-        if (response) {
-            let user = response;
-            delete user.status;
+        let response = await request(
+            `/user/login`,
+            undefined, 
+            { method: "POST", body }
+        );
+        console.log(response);
+        if (this.responseManagment(response)) {
+            const user = response.result;
             this.props.setUser(user);
             localStorage.setItem(STORED_USER, JSON.stringify(user));
             this.props.history.push(`/${user.role}/dashboard`);
@@ -58,23 +62,27 @@ class Login extends Component {
         return (
             <main className="login">
                 <h1>Connexion</h1>
-                <Form
-                    form_items={[
-                        {
-                            type: "text",
-                            name: "email",
-                            label: "Identifiant",
-                            required: true
-                        },
-                        {
-                            type: "password",
-                            name: "password",
-                            label: "Mot de passe",
-                            required: true
-                        }
-                    ]}
-                    callback={this.connection}
-                />
+                {this.state.loading ? (
+                    <Loading />
+                ) : (
+                    <Form
+                        form_items={[
+                            {
+                                type: "text",
+                                name: "email",
+                                label: "Identifiant",
+                                required: true
+                            },
+                            {
+                                type: "password",
+                                name: "password",
+                                label: "Mot de passe",
+                                required: true
+                            }
+                        ]}
+                        callback={this.connection}
+                    />
+                )}
             </main>
         );
     }

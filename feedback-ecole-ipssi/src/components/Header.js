@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Header = props => (
+const Header = props => (
     <header>
         <Link to={`/${props.user.role}/dashboard`} className="logo">
             <img alt="logo IPSSI" src="/images/logo.png" />
@@ -15,9 +15,9 @@ export const Header = props => (
             <Link to={`/${props.user.role}/dashboard`} className="user-name">
                 {props.user.first_name} {props.user.last_name}
             </Link>
-            <Link to={`/logout`}>
-                Déconnexion
-            </Link>
+            <Link to={`/logout`}>Déconnexion</Link>
         </div>
     </header>
 );
+
+export default Header;
