@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Login from "./login/Login";
 import Logout from "./login/Logout";
 import Dashboard from "./dashboard/Dashboard";
+
 // import Module from "./module/Module";
 import AddUser from "./admin/AddUser";
 import AddModule from "./admin/AddModule";

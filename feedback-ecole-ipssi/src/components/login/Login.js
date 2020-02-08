@@ -49,6 +49,14 @@ class Login extends Component {
             this.setState({ loading: false });
         }
     }
+  
+    // Get Token from API
+    async getToken(body) {
+        let response = await request(`/user/login`, { method: "POST", body });
+
+        if (this.responseManagment(response)) return response;
+        return null;
+    }
 
     render() {
         return (
