@@ -1,13 +1,12 @@
 // module
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 // component
-// import Form from '../form/Form';
-import ModuleTeaser from "../ModuleTeaser";
+import ModuleNotation from "../module/ModuleNotation";
 import Loading from "../Loading";
 // actions
-import { setUser, setLog } from "../../reducer/actions";
+import { setLog } from "../../reducer/actions";
 // functions
 import { request, responseManagment } from "../../functions/fetch";
 
@@ -25,19 +24,21 @@ class Dashboard extends Component {
 
     UNSAFE_componentWillMount() {
         if (this.props.user.role !== this.props.match.params.role) {
-            this.props.history.push(`/${this.props.user.role}/dashboard`);
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
-        this.getModules();
+        // this.getModules();
     }
 
     async getModules() {
         this.setState({ loading: true });
-        const response = await request(`/modules`, this.props.user.token);
-        console.log(response);
-        if (this.responseManagment(response)) {
-            this.setState({ modules: response.result });
-            this.getTeachersModules(response.result);
-        }
+        // const response = await request(`"/school_year/student/${this.props.user._id}`, this.props.user.token);
+        // const response = await request(`/modules/school_year/:school_year_id`, this.props.user.token);
+        // const response = await request(`/modules/:module_id`, this.props.user.token);
+        // console.log(response);
+        // if (this.responseManagment(response)) {
+        //     this.setState({ modules: response.result });
+        //     this.getTeachersModules(response.result);
+        // }
         this.setState({ loading: false });
     }
 
@@ -69,7 +70,7 @@ class Dashboard extends Component {
         let modules_id = modules.map(module => module._id);
         console.log(modules_id);
         const response = await request(
-            `/notes/modules`,
+            `/notes/student/${this.props.user._id}`,
             this.props.user.token,
             {
                 method: "POST",
@@ -79,12 +80,9 @@ class Dashboard extends Component {
         console.log(response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
-                module.notes = response.result.filter(
+                module.note = response.result.filter(
                     note => note.module_id === module._id
-                );
-                module.average =
-                    module.notes.reduce((sum, note) => sum + note.value, 0) 
-                    / module.notes.length;
+                )[0];
                 this.setState({ modules });
                 return module;
             });
@@ -93,20 +91,17 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <main className="dashboard">
-                <h1>Tableau de Bord</h1>
-                <section className="module-list">
-                    {this.state.loading ? (
-                        <Loading />
-                    ) : this.state.modules.length ? (
-                        <ul className="modules">
-                            {this.state.modules.map((module, i) => (
-                                <ModuleTeaser module={module} key={i} />
-                            ))}
-                        </ul>
-                    ) : null}
-                </section>
-            </main>
+            <section className="module-list">
+                {this.state.loading ? (
+                    <Loading />
+                ) : this.state.modules.length ? (
+                    <ul className="modules">
+                        {this.state.modules.map((module, i) => (
+                            <ModuleNotation module={module} key={i} />
+                        ))}
+                    </ul>
+                ) : null}
+            </section>
         );
     }
 }
@@ -116,7 +111,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    setUser,
     setLog
 };
 
