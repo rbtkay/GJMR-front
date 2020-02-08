@@ -31,7 +31,7 @@ class Dashboard extends Component {
             <main className="dashboard">
                 <h1>Tableau de Bord</h1>
                 <section className="module-list">
-                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/addStudent`) }}>+</button>
+                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-student`) }}>+</button>
                 </section>
             </main>
         );

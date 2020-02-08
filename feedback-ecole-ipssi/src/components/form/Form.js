@@ -10,6 +10,8 @@ class Form extends Component {
 
         this.state = {};
         this.initialState = {};
+
+        console.log(this.props);
         props.form_items.forEach(form_item => {
             this.initialState[form_item.name] = "";
         });
@@ -36,8 +38,17 @@ class Form extends Component {
     }
 
     render() {
+        let select_options = this.props.select_options;
+        let options = <option>Choisir Une Promotion</option>;
+        if (select_options != null) {
+            options = select_options.map((opt) =>
+                <option key={opt._id} value={opt._id}>
+                    {opt.name}
+                </option>
+            );
+        }
         return (
-            <form className="form" onSubmit={this.handleSubmit}>
+            <form className="form" id="formid" onSubmit={this.handleSubmit}>
                 <div className="form-item-list">
                     {this.props.form_items.map((form_item, i) => (
                         <FormItem
@@ -47,6 +58,13 @@ class Form extends Component {
                             callback={this.handleChange}
                         />
                     ))}
+                </div>
+                <div className="form-item-list">
+                    <label>Promotions - </label>
+                    <select name="select_options" onChange={this.handleChange}>
+                        <option>-</option>
+                        {options}
+                    </select>
                 </div>
                 <div className="submit-button-wrapper">
                     <button className="btn submit-button" type="submit">
@@ -58,9 +76,10 @@ class Form extends Component {
     }
 }
 
-Form.propTypes = {
-    form_items: PropTypes.arrayOf(PropTypes.object).isRequired,
-    callback: PropTypes.func.isRequired
-};
+// Form.propTypes = {
+//     form_items: PropTypes.arrayOf(PropTypes.object).isRequired,
+//     select_options: PropTypes,
+//     callback: PropTypes.func.isRequired
+// };
 
 export default Form;

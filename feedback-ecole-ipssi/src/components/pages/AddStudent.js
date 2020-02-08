@@ -9,19 +9,19 @@ import { setUser, setLog } from '../../reducer/actions';
 class AddStudent extends Component {
     constructor(props) {
         super(props);
-        console.log("add student Form ")
-        console.log(this.props)
+        this.state = {
+            select_options: null
+        }
 
         this.addStudentToYear = this.addStudentToYear.bind(this);
+        this.getSchoolYear = this.getSchoolYear.bind(this);
     }
 
-    UNSAFE_componentWillMount() {
+    async UNSAFE_componentWillMount() {
         if (!this.props.user) {
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
     }
-
-    
 
     render() {
         return (
@@ -48,28 +48,39 @@ class AddStudent extends Component {
                             required: true
                         },
                     ]}
+                    select_options={this.state.select_options}
                     callback={this.addStudentToYear}
                 />
-            </main>
+
+            </main >
         )
     }
-    async addStudentToYear(form_result) {
-        console.log(form_result);
 
+    async addStudentToYear(form_result) {
+        console.log(form_result)
         let new_student = {
             email: form_result['email'],
             last_name: form_result['last_name'],
             first_name: form_result['first_name'],
-            role: "student"
+            role: "student",
+            school_year: form_result["select_options"]
         }
-
         //TODO: add token
         let response = await request(`/user`, { method: "POST", body: new_student });
         if (response.status === 201) {
             console.log("Student inserted");
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
-        // localStorage.getItem(STORED_USER);
+        localStorage.getItem(STORED_USER);
+    }
+
+    async componentWillMount() {
+        let response = await request(`/school-year`, { method: "GET" });
+        console.log('response', response)
+        let options = response.map(promo => {
+            return promo["name"]
+        })
+        this.setState({ select_options: response });
     }
 
 }
