@@ -9,7 +9,7 @@ import Loading from "../Loading";
 // actions
 import { setUser, setLog } from "../../reducer/actions";
 // functions
-import { request, responseManagment } from "../../functions/fetch";
+import { request, responseManagment } from "../../functions/fetch"
 
 class Dashboard extends Component {
     constructor(props) {
@@ -74,6 +74,11 @@ class Dashboard extends Component {
                             ))}
                         </ul>
                     ) : null}
+                </section>
+                <section>
+                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-student`) }}>Ajouter un eleve</button>
+                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-teacher`) }}>Ajouter un intervenant</button>
+                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-module`) }}>Ajouter un module</button>
                 </section>
             </main>
         );

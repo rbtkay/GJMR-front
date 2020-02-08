@@ -50,6 +50,14 @@ class Login extends Component {
         }
     }
 
+    // Get Token from API
+    async getToken(body) {
+        let response = await request(`/user/login`, { method: "POST", body });
+
+        if (this.responseManagment(response)) return response;
+        return null;
+    }
+
     render() {
         return (
             <main className="login">
