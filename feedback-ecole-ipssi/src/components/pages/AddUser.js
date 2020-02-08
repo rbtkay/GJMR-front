@@ -78,6 +78,8 @@ class AddUser extends Component {
     }
 
     async componentWillMount() {
+        if (window.location.href.split('-')[1] != "student") return; //we don't need the schoolyears in case it is not a student 
+
         let response = await request(`/school-year`, { method: "GET" });
         console.log('response', response)
         let options = response.map(promo => {

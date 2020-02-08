@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Dashboard from "./pages/Dashboard";
 import AddUser from "./pages/AddUser";
+import AddModule from "./pages/AddModule";
 // import Module from "./pages/Module";
 
 class Router extends Component {
@@ -31,6 +32,9 @@ class Router extends Component {
                 </Route>
                 <Route exact path="/:role/dashboard/add-teacher/">
                     <AddUser />
+                </Route>
+                <Route exact path="/:role/dashboard/add-module/">
+                    <AddModule />
                 </Route>
                 {/* 
                 <Route exact path="/student/dashboard"></Route>

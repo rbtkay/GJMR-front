@@ -70,7 +70,8 @@ class Form extends Component {
     }
 
     renderSelect(options) {
-        if (window.location.href.split('-')[1] == 'student') {
+        let user_role = window.location.href.split('-')[1];
+        if (user_role == 'student') {
             return (
                 <div className="form-item-list">
                     <label>Promotions - </label>
@@ -78,6 +79,25 @@ class Form extends Component {
                         <option>-</option>
                         {options}
                     </select>
+                </div>
+            )
+        } else if (user_role == 'module') {
+            return (
+                <div>
+                    <div className="form-item-list">
+                        <label>Promotion - </label>
+                        <select name="select_options" onChange={this.handleChange}>
+                            <option>-</option>
+                            {options}
+                        </select>
+                    </div>
+                    <div className="form-item-list">
+                        <label>Nom de l'intervenant - </label>
+                        <select name="select_option_teacher" onChange={this.handleChange}>
+                            <option>-</option>
+                            {options}
+                        </select>
+                    </div>
                 </div>
             )
         } else {

@@ -33,6 +33,7 @@ class Dashboard extends Component {
                 <section className="module-list">
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-student`) }}>Ajouter un eleve</button>
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-teacher`) }}>Ajouter un intervenant</button>
+                    <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-module`) }}>Ajouter un module</button>
                 </section>
             </main>
         );
