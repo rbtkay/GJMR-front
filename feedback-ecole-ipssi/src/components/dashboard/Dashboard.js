@@ -57,6 +57,7 @@ class Dashboard extends Component {
                 return module;
             });
             this.setState({ modules });
+
         }
     }
 
@@ -80,6 +81,17 @@ class Dashboard extends Component {
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-teacher`) }}>Ajouter un intervenant</button>
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-module`) }}>Ajouter un module</button>
                 </section>
+                //<Switch>
+                //    <Route exact path="/dashboard/student">
+                //        <DashboardStudent />
+                //    </Route>
+                 //   <Route exact path="/dashboard/teacher">
+                 //       <DashboardTeacher />
+                 //   </Route>
+                 //   <Route exact path="/dashboard/admin">
+                 //       <DashboardAdmin />
+                //    </Route>
+              //  </Switch>
             </main>
         );
     }

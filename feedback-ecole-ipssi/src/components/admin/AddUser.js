@@ -7,6 +7,7 @@ import { STORED_USER } from "../../constants";
 import { setUser, setLog } from '../../reducer/actions';
 import Loading from '../Loading';
 
+
 class AddUser extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +77,7 @@ class AddUser extends Component {
     async addUser(form_result) {
         let user_role = window.location.href.split('-')[1]; //used to know what kind of user to add
         if (user_role != "teacher" && user_role != "student") this.props.history.push(`/login`)
-
+      
         let new_user = {
             email: form_result['email'],
             last_name: form_result['last_name'],
