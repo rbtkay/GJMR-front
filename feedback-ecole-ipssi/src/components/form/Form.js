@@ -59,13 +59,7 @@ class Form extends Component {
                         />
                     ))}
                 </div>
-                <div className="form-item-list">
-                    <label>Promotions - </label>
-                    <select name="select_options" onChange={this.handleChange}>
-                        <option>-</option>
-                        {options}
-                    </select>
-                </div>
+                {this.renderSelect(options)}
                 <div className="submit-button-wrapper">
                     <button className="btn submit-button" type="submit">
                         Valider
@@ -73,6 +67,22 @@ class Form extends Component {
                 </div>
             </form>
         );
+    }
+
+    renderSelect(options) {
+        if (window.location.href.split('-')[1] == 'student') {
+            return (
+                <div className="form-item-list">
+                    <label>Promotions - </label>
+                    <select name="select_options" onChange={this.handleChange}>
+                        <option>-</option>
+                        {options}
+                    </select>
+                </div>
+            )
+        } else {
+            return
+        }
     }
 }
 

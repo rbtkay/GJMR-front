@@ -6,15 +6,14 @@ import { request } from "../../functions/fetch";
 import { STORED_USER } from "../../constants";
 import { setUser, setLog } from '../../reducer/actions';
 
-class AddStudent extends Component {
+class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
             select_options: null
         }
 
-        this.addStudentToYear = this.addStudentToYear.bind(this);
-        this.getSchoolYear = this.getSchoolYear.bind(this);
+        this.addUser = this.addUser.bind(this);
     }
 
     async UNSAFE_componentWillMount() {
@@ -24,9 +23,10 @@ class AddStudent extends Component {
     }
 
     render() {
+        let title = window.location.href.split('-')[1] == 'student' ? "etudiant" : "intervenant";
         return (
             <main>
-                <h1>Ajoute Nouvel etudiant</h1>
+                <h1>Nouvel {title}</h1>
                 <Form
                     form_items={[
                         {
@@ -49,26 +49,29 @@ class AddStudent extends Component {
                         },
                     ]}
                     select_options={this.state.select_options}
-                    callback={this.addStudentToYear}
+                    callback={this.addUser}
                 />
 
             </main >
         )
     }
 
-    async addStudentToYear(form_result) {
-        console.log(form_result)
-        let new_student = {
+    async addUser(form_result) {
+        let user_role = window.location.href.split('-')[1]; //used to know what kind of user to add
+        if (user_role != "teacher" && user_role != "student") this.props.history.push(`/login`)
+
+        console.log(user_role)
+        let new_user = {
             email: form_result['email'],
             last_name: form_result['last_name'],
             first_name: form_result['first_name'],
-            role: "student",
+            role: user_role,
             school_year: form_result["select_options"]
         }
         //TODO: add token
-        let response = await request(`/user`, { method: "POST", body: new_student });
+        let response = await request(`/user`, { method: "POST", body: new_user });
         if (response.status === 201) {
-            console.log("Student inserted");
+            console.log("user inserted");
             this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
         localStorage.getItem(STORED_USER);
@@ -94,5 +97,5 @@ const mapDispatchToProps = {
     setLog
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddStudent));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddUser));
 

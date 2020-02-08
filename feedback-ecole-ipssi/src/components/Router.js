@@ -6,7 +6,7 @@ import { withRouter } from "react-router";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Dashboard from "./pages/Dashboard";
-import AddStudent from "./pages/AddStudent";
+import AddUser from "./pages/AddUser";
 // import Module from "./pages/Module";
 
 class Router extends Component {
@@ -15,19 +15,22 @@ class Router extends Component {
             <Switch>
                 {/* Login */}
                 <Route exact path="/login">
-                    <Login/>
+                    <Login />
                 </Route>
                 <Route exact path="/logout">
-                    <Logout/>
+                    <Logout />
                 </Route>
                 <Route exact path="/:role/dashboard">
-                    <Dashboard/>
+                    <Dashboard />
                 </Route>
                 <Route exact path="/:role/modules/:id">
                     {/* <Module/> */}
                 </Route>
                 <Route exact path="/:role/dashboard/add-student/">
-                    <AddStudent/>
+                    <AddUser />
+                </Route>
+                <Route exact path="/:role/dashboard/add-teacher/">
+                    <AddUser />
                 </Route>
                 {/* 
                 <Route exact path="/student/dashboard"></Route>
