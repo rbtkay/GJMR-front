@@ -89,20 +89,32 @@ class DashboardAdmin extends Component {
 
     render() {
         return (
-            <nav className="creation">
-                <ul>
-                    <li>
-                        <Link to={`/admin/add-user/student`} className="btn">Ajouter un eleve</Link>
-                    </li>
-                    <li>
-                        <Link to={`/admin/add-user/teacher`} className="btn">Ajouter un intervenant</Link>
-                    </li>
-                    <li>
-                        <Link to={`/admin/add-module`} className="btn">Ajouter un module</Link>
-                    </li>
-                </ul>
-            </nav>
             <section className="module-list">
+                <nav className="creation">
+                    <ul>
+                        <li>
+                            <Link
+                                to={`/admin/add-user/student`}
+                                className="btn"
+                            >
+                                Ajouter un eleve
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to={`/admin/add-user/teacher`}
+                                className="btn"
+                            >
+                                Ajouter un intervenant
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={`/admin/add-module`} className="btn">
+                                Ajouter un module
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.modules.length ? (
