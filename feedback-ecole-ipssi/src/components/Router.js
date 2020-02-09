@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Login from "./login/Login";
 import Logout from "./login/Logout";
 import Dashboard from "./dashboard/Dashboard";
+import Module from "./module/Module";
 
 // import Module from "./module/Module";
 import AddUser from "./admin/AddUser";
@@ -25,8 +26,8 @@ class Router extends Component {
                 <Route path="/dashboard/:role">
                     <Dashboard/>
                 </Route>
-                <Route exact path="/modules/:role/:id">
-                    {/* <Module/> */}
+                <Route exact path="/modules/:id">
+                    <Module/>
                 </Route>
                 <Route exact path="/admin/add-user/:role">
                     <AddUser />

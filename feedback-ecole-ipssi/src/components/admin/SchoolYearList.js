@@ -36,21 +36,51 @@ class SchoolYearList extends Component {
         this.setState({ loading: false });
     }
 
+    async deleteSchoolYear(id) {
+        const response = await request(
+            `/school_year/${id}`,
+            this.props.user.token,
+            {
+                method: "DELETE"
+            }
+        );
+        if (response.status === 201 || response.status === 200) {
+            console.log("session supprimée");
+            this.setState({
+                school_years: this.state.school_years.filter(
+                    school_year => school_year._id !== id
+                )
+            });
+        }
+    }
+
     render() {
         return (
             <section className="school-year-list">
+                <h2>Liste des promotions</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.school_years.length ? (
                     <Table
                         className="school-years"
-                        labels={["Nom", "Date de début", "Date de fin"]}
+                        labels={["Nom", "Date de début", "Date de fin", ""]}
                     >
                         {this.state.school_years.map((school_year, i) => (
                             <tr key={i}>
                                 <td>{school_year.name}</td>
                                 <td>{school_year.start_date}</td>
                                 <td>{school_year.end_date}</td>
+                                <td>
+                                    <button
+                                        onClick={evt =>
+                                            this.deleteSchoolYear(
+                                                school_year._id
+                                            )
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </Table>

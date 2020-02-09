@@ -22,16 +22,15 @@ class AddUser extends Component {
 
         this.responseManagment = responseManagment.bind(this);
         this.postUser = this.postUser.bind(this);
+        this.goBack = this.goBack.bind(this);
     }
 
     async UNSAFE_componentWillMount() {
         if (
             this.props.user.role !== "admin" ||
-            (
-                this.props.match.params.role !== "admin" &&
+            (this.props.match.params.role !== "admin" &&
                 this.props.match.params.role !== "student" &&
-                this.props.match.params.role !== "teacher"
-            )
+                this.props.match.params.role !== "teacher")
         ) {
             this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
@@ -67,6 +66,10 @@ class AddUser extends Component {
                 this.props.history.push(`/login`);
             }
         }
+    }
+
+    goBack(evt) {
+        this.props.history.push(`/dashboard/admin/`);
     }
 
     render() {
@@ -109,11 +112,14 @@ class AddUser extends Component {
         return (
             <main>
                 <h1>Nouvel {this.props.match.params.role}</h1>
+                <button className="back-btn" onClick={this.goBack}>
+                    Retour
+                </button>
                 {this.state.loading ? (
                     <Loading />
                 ) : (
-                        <Form form_items={form_items} callback={this.postUser} />
-                    )}
+                    <Form form_items={form_items} callback={this.postUser} />
+                )}
             </main>
         );
     }

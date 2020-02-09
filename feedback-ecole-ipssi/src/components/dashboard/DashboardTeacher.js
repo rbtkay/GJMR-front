@@ -77,7 +77,11 @@ class DashboardTeacher extends Component {
                     <Table className="modules" labels={["Nom", "Moyenne"]}>
                         {this.state.modules.map((module, i) => (
                             <tr key={i}>
-                                <td>{module.name}</td>
+                            <td>
+                                <a href={`/modules/${module._id}`}>
+                                    {module.name}
+                                </a>
+                            </td>
                                 <td>{module.average ? module.average : "-"}</td>
                             </tr>
                         ))}

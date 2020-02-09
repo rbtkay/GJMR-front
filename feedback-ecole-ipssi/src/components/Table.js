@@ -2,11 +2,11 @@
 import React from "react";
 
 const Table = table => (
-    <table className={table.className} cellspacing="0" cellpadding="0">
+    <table className={table.className} cellSpacing="0" cellPadding="0">
         <thead>
             <tr>
-                {table.labels.map(label => (
-                    <th>{label}</th>
+                {table.labels.map((label, i) => (
+                    <th key={i}>{label}</th>
                 ))}
             </tr>
         </thead>

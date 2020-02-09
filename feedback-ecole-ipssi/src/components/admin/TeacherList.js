@@ -39,21 +39,45 @@ class TeacherList extends Component {
         this.setState({ loading: false });
     }
 
+    async deleteTeacher(id) {
+        const response = await request(`/user/${id}`, this.props.user.token, {
+            method: "DELETE"
+        });
+        if (response.status === 201 || response.status === 200) {
+            console.log("utilisateur supprimé");
+            this.setState({
+                teachers: this.state.teachers.filter(
+                    teacher => teacher._id !== id
+                )
+            });
+        }
+    }
+
     render() {
         return (
             <section className="teacher-list">
+                <h2>Liste des intervenants</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.teachers.length ? (
                     <Table
                         className="teachers"
-                        labels={["Nom", "Prénom", "Email"]}
+                        labels={["Nom", "Prénom", "Email", ""]}
                     >
                         {this.state.teachers.map((teacher, i) => (
                             <tr key={i}>
                                 <td>{teacher.first_name}</td>
                                 <td>{teacher.last_name}</td>
                                 <td>{teacher.email}</td>
+                                <td>
+                                    <button
+                                        onClick={evt =>
+                                            this.deleteTeacher(teacher._id)
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </Table>

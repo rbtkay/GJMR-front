@@ -39,21 +39,45 @@ class StudentList extends Component {
         this.setState({ loading: false });
     }
 
+    async deleteStudent(id) {
+        const response = await request(`/user/${id}`, this.props.user.token, {
+            method: "DELETE"
+        });
+        if (response.status === 201 || response.status === 200) {
+            console.log("utilisateur supprimé");
+            this.setState({
+                students: this.state.students.filter(
+                    student => student._id !== id
+                )
+            });
+        }
+    }
+
     render() {
         return (
             <section className="student-list">
+                <h2>Liste des étudiants</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.students.length ? (
                     <Table
                         className="students"
-                        labels={["Nom", "Prénom", "Email"]}
+                        labels={["Nom", "Prénom", "Email", ""]}
                     >
                         {this.state.students.map((student, i) => (
                             <tr key={i}>
                                 <td>{student.first_name}</td>
                                 <td>{student.last_name}</td>
                                 <td>{student.email}</td>
+                                <td>
+                                    <button
+                                        onClick={evt =>
+                                            this.deleteStudent(student._id)
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </Table>

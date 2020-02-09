@@ -86,6 +86,22 @@ class ModuleList extends Component {
         }
     }
 
+    async deleteModule(id) {
+        const response = await request(
+            `/modules/${id}`,
+            this.props.user.token,
+            {
+                method: "DELETE"
+            }
+        );
+        if (response.status === 201 || response.status === 200) {
+            console.log("module supprimé");
+            this.setState({
+                modules: this.state.modules.filter(module => module._id !== id)
+            });
+        }
+    }
+
     render() {
         return (
             <section className="module-list">
@@ -95,17 +111,30 @@ class ModuleList extends Component {
                 ) : this.state.modules.length ? (
                     <Table
                         className="modules"
-                        labels={["Nom", "Intervenant", "Moyenne"]}
+                        labels={["Nom", "Intervenant", "Moyenne", ""]}
                     >
                         {this.state.modules.map((module, i) => (
                             <tr key={i}>
-                                <td>{module.name}</td>
+                                <td>
+                                    <a href={`/modules/${module._id}`}>
+                                        {module.name}
+                                    </a>
+                                </td>
                                 <td>
                                     {module.teacher
                                         ? `${module.teacher.first_name} ${module.teacher.last_name}`
                                         : null}
                                 </td>
                                 <td>{module.average ? module.average : "-"}</td>
+                                <td>
+                                    <button
+                                        onClick={evt =>
+                                            this.deleteModule(module._id)
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </Table>

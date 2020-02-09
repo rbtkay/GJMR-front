@@ -4,6 +4,7 @@
 body
     margin: 0
     padding: 0
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 
 .app
     min-height: 100vh
@@ -18,12 +19,15 @@ main
 header
     padding: 15px
     display: flex
+    flex-wrap: wrap
     align-items: center
     justify-content: space-between
     .user-name
         text-transform: capitalize
         margin-right: 15px
         text-decoration: none
+    .header-rigth
+        margin: 15px 0
 
 footer
     background-color: $dark_blue
@@ -41,6 +45,7 @@ h1
 
 nav ul 
     display: flex
+    flex-wrap: wrap
     margin: 0 0 15px
     padding: 0
     li
@@ -54,6 +59,14 @@ a
     &:active,
     &.active
         color: $pink
+    
+label
+    margin-right: 10px
+button,
+.btn,
+.form-item,
+.select-item
+    margin-bottom: 10px
 
 .sr-only
     // from bootstrap
@@ -72,7 +85,7 @@ a
 .note-form
     transition: max-height 0.5s
     overflow: hidden
-    max-height: 100px //arbitraire
+    max-height: 150px //arbitraire
     &.hidden
         max-height: 0
 
