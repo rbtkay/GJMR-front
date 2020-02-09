@@ -2,12 +2,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { Route, Switch, Redirect } from "react-router-dom";
 // component
 // import Form from '../form/Form';
-import ModuleTeaser from "../ModuleTeaser";
+// import ModuleTeaser from "../ModuleTeaser";
 import Loading from "../Loading";
 // actions
 import { setUser, setLog } from "../../reducer/actions";
+import DashboardAdmin from "./DashboardAdmin";
+import DashboardStudent from "./DashboardStudent";
+import DashboardTeacher from "./DashboardTeacher";
 // functions
 import { request, responseManagment } from "../../functions/fetch"
 
@@ -25,7 +29,7 @@ class Dashboard extends Component {
 
     UNSAFE_componentWillMount() {
         if (this.props.user.role !== this.props.match.params.role) {
-            this.props.history.push(`/${this.props.user.role}/dashboard`);
+            // this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
         this.getModules();
     }
@@ -33,7 +37,7 @@ class Dashboard extends Component {
     async getModules() {
         this.setState({ loading: true });
         const response = await request(`/modules`, this.props.user.token);
-        console.log(response);
+        // console.log(response);
         if (this.responseManagment(response)) {
             this.setState({ modules: response.result });
             this.getTeachersModules(response.result);
@@ -65,7 +69,7 @@ class Dashboard extends Component {
         return (
             <main className="dashboard">
                 <h1>Tableau de Bord</h1>
-                <section className="module-list">
+                {/* <section className="module-list">
                     {this.state.loading ? (
                         <Loading />
                     ) : this.state.modules.length ? (
@@ -75,23 +79,23 @@ class Dashboard extends Component {
                             ))}
                         </ul>
                     ) : null}
-                </section>
-                <section>
+                </section> */}
+                {/* <section>
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-student`) }}>Ajouter un eleve</button>
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-teacher`) }}>Ajouter un intervenant</button>
                     <button onClick={() => { this.props.history.push(`/${this.props.user.role}/dashboard/add-module`) }}>Ajouter un module</button>
-                </section>
-                //<Switch>
-                //    <Route exact path="/dashboard/student">
-                //        <DashboardStudent />
-                //    </Route>
-                 //   <Route exact path="/dashboard/teacher">
-                 //       <DashboardTeacher />
-                 //   </Route>
-                 //   <Route exact path="/dashboard/admin">
-                 //       <DashboardAdmin />
-                //    </Route>
-              //  </Switch>
+                </section> */}
+                <Switch>
+                    <Route exact path="/dashboard/student">
+                        <DashboardStudent />
+                    </Route>
+                    <Route exact path="/dashboard/teacher">
+                        <DashboardTeacher />
+                    </Route>
+                    <Route exact path="/dashboard/admin">
+                        <DashboardAdmin />
+                    </Route>
+                </Switch>
             </main>
         );
     }
