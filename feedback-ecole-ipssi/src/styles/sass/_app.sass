@@ -16,6 +16,7 @@ header
     .user-name
         text-transform: capitalize
         margin-right: 15px
+        text-decoration: none
 
 footer
     background-color: $dark_blue
@@ -41,6 +42,11 @@ nav ul
 
 a
     color: black
+    &:hover,
+    &:focus,
+    &:active,
+    &.active
+        color: $pink
 
 .sr-only
     // from bootstrap

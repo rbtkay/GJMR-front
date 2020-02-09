@@ -99,7 +99,7 @@ class DashboardAdmin extends Component {
                     </Route>
                     {/* Redirection */}
                     <Route exact path="/dashboard/admin">
-                        <ModuleList />
+                        <Redirect to={`/dashboard/admin/modules`} />
                     </Route>
                     <Route path="/dashboard/admin">
                         <Redirect to={`/404`} />
