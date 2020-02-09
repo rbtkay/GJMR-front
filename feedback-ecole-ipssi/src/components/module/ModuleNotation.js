@@ -36,9 +36,12 @@ class ModuleNotation extends Component {
                 method: "POST",
                 body
             });
+            console.log(response);
             if (response.status === 201 || response.status === 200) {
                 console.log("note inserted");
                 this.props.updateModule(body, this.props.module._id);
+            }else if(response.status === 403){
+                this.props.history.push("/login");
             }
         }
     }
@@ -57,50 +60,50 @@ class ModuleNotation extends Component {
                         <span> {this.props.module.note.comment}</span>
                     </Fragment>
                 ) : (
-                    <Fragment>
-                        <button onClick={this.toggleNoteForm}>Noter</button>
-                        <div
-                            className={
-                                "note-form" +
-                                (this.state.hidden ? " hidden" : "")
-                            }
-                        >
-                            {this.state.loading ? (
-                                <Loading />
-                            ) : (
-                                <Form
-                                    form_items={[
-                                        {
-                                            type: "number",
-                                            name: "value",
-                                            label: "Note",
-                                            required: true
-                                        },
-                                        {
-                                            type: "textarea",
-                                            name: "comment",
-                                            label: "Appréciation",
-                                            required: true
-                                        },
-                                        {
-                                            type: "hidden",
-                                            name: "student_id",
-                                            value: this.props.user._id,
-                                            required: true
-                                        },
-                                        {
-                                            type: "hidden",
-                                            name: "module_id",
-                                            value: this.props.module._id,
-                                            required: true
-                                        }
-                                    ]}
-                                    callback={this.postNote}
-                                />
-                            )}
-                        </div>
-                    </Fragment>
-                )}
+                        <Fragment>
+                            <button onClick={this.toggleNoteForm}>Noter</button>
+                            <div
+                                className={
+                                    "note-form" +
+                                    (this.state.hidden ? " hidden" : "")
+                                }
+                            >
+                                {this.state.loading ? (
+                                    <Loading />
+                                ) : (
+                                        <Form
+                                            form_items={[
+                                                {
+                                                    type: "number",
+                                                    name: "value",
+                                                    label: "Note",
+                                                    required: true
+                                                },
+                                                {
+                                                    type: "textarea",
+                                                    name: "comment",
+                                                    label: "Appréciation",
+                                                    required: true
+                                                },
+                                                {
+                                                    type: "hidden",
+                                                    name: "student_id",
+                                                    value: this.props.user._id,
+                                                    required: true
+                                                },
+                                                {
+                                                    type: "hidden",
+                                                    name: "module_id",
+                                                    value: this.props.module._id,
+                                                    required: true
+                                                }
+                                            ]}
+                                            callback={this.postNote}
+                                        />
+                                    )}
+                            </div>
+                        </Fragment>
+                    )}
             </li>
         );
     }

@@ -50,12 +50,10 @@ class AddUser extends Component {
     }
 
     async postUser(body) {
-        if (localStorage.getItem(STORED_USER) == null) {
+        if (this.props.user.token == null) {
             this.props.history.push(`/login`);
         } else {
-            const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
-
-            const response = await request(`/user`, token, {
+            const response = await request(`/user`, this.props.user.token, {
                 method: "POST",
                 body
             });

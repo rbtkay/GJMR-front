@@ -64,11 +64,11 @@ class AddModule extends Component {
     }
 
     async postModule(body) {
-        if (localStorage.getItem(STORED_USER) == null)
+        console.log("props on postModule", this.props)
+        if (this.props.user.token == null)
             this.props.history.push(`/login`);
 
-        const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
-        let response = await request(`/modules`, token, {
+        let response = await request(`/modules`, this.props.user.token, {
             method: "POST",
             body
         });
@@ -82,9 +82,6 @@ class AddModule extends Component {
     }
 
     render() {
-        if (localStorage.getItem(STORED_USER) == null) {
-            this.props.history.push(`/login`);
-        }
         return (
             <main>
                 <h1>Nouveau Module</h1>
