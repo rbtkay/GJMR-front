@@ -23,6 +23,7 @@ class AddModule extends Component {
 
         this.responseManagment = responseManagment.bind(this);
         this.postModule = this.postModule.bind(this);
+        this.goBack = this.goBack.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -81,10 +82,15 @@ class AddModule extends Component {
         this.setState({ loading: false });
     }
 
+    goBack(evt) {
+        this.props.history.push(`/dashboard/admin/`);
+    }
+
     render() {
         return (
             <main>
                 <h1>Nouveau Module</h1>
+                <button className="back-btn" onClick={this.goBack}>Retour</button>
                 {this.state.loading ?
                     <Loading />
                     :

@@ -4,13 +4,133 @@
 body
     margin: 0
     padding: 0
-    main
-        padding: 15px
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+
+.app
+    min-height: 100vh
+    width: 100vw
+    display: flex
+    flex-direction: column
+
+main
+    padding: 15px
+    flex-grow: 1
+
+header
+    padding: 15px
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    justify-content: space-between
+    .user-name
+        text-transform: capitalize
+        margin-right: 15px
+        text-decoration: none
+    .header-rigth
+        margin: 15px 0
+
+footer
+    background-color: $dark_blue
+    text-align: center
+    color: white
+    padding: 40px 15px
     a
-        color: black
-    .note-form
-        transition: max-height 0.5s
+        color: white
+
+h1
+    margin: 0 -15px 30px
+    padding: 15px
+    color: white
+    background-color: $blue
+
+nav ul 
+    display: flex
+    flex-wrap: wrap
+    margin: 0 0 15px
+    padding: 0
+    li
+        padding: 5px 10px
+        list-style-type: none
+
+a
+    color: black
+    &:hover,
+    &:focus,
+    &:active,
+    &.active
+        color: $pink
+    
+label
+    margin-right: 10px
+    &.textarea
+        vertical-align: top
+button,
+.btn,
+.form-item,
+.select-item
+    margin-bottom: 10px
+
+.sr-only
+    // from bootstrap
+    position: absolute
+    width: 1px
+    height: 1px
+    padding: 0
+    margin: -1px
+    overflow: hidden
+    clip: rect(0,0,0,0)
+    border: 0
+
+.login
+    padding-top: 0
+
+table
+    border: 0
+    margin-bottom: 15px
+    thead, tbody, tr, td, th
+        border: 0
+        border-spacing: 0
+        border-collapse: collapse
+    td, th
+        padding: 10px 15px
+    th
+        text-transform: uppercase
+    thead tr
+        background-color: transparentize($blue, 0.6)
+    tr:nth-child(even)
+        background-color: transparentize($blue, 0.7)
+
+table.modules
+    td
+        position: relative
+        a:before
+            content: ''
+            position: absolute
+            left: 0
+            right: 0
+            bottom: 0
+            top: 0
+            z-index: 1
+
+
+.tr-clickable
+    cursor: pointer
+.tr-hiddenable
+    border-top: 1px solid white
+    td
+        background-color: $dark_blue
+        color: white
+        .animated-cell
+            transition: max-height 0.5s
+            overflow: hidden
+            max-height: 150px //arbitraire
+    &.hidden
         overflow: hidden
-        max-height: 100px //arbitraire
-        &.hidden
-            max-height: 0
+        &:after
+            content: none
+        td
+            padding-top: 0
+            padding-bottom: 0
+            transition: all 0.3s
+            .animated-cell
+                max-height: 0

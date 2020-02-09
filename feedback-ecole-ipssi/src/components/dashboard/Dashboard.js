@@ -25,7 +25,7 @@ class Dashboard extends Component {
                     <Route exact path="/dashboard/teacher">
                         <DashboardTeacher />
                     </Route>
-                    <Route exact path="/dashboard/admin">
+                    <Route path="/dashboard/admin">
                         <DashboardAdmin />
                     </Route>
                     {/* Redirection */}

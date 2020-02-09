@@ -10,7 +10,7 @@ const FormItem = props => {
 
     return (
         <div className="form-item form-group">
-            <label htmlFor={name}>
+            <label htmlFor={name} className={props.input.type}>
                 {/* Add '*' to required input's label */}
                 {label}{required ? "\u00A0*" : ""}
             </label>
@@ -18,6 +18,7 @@ const FormItem = props => {
                 <textarea
                     name={name}
                     id={name}
+                    placeholder={props.input.placeholder}
                     onChange={evt => props.callback(evt, name)}
                     value={props.value}
                     required={required}
@@ -27,6 +28,7 @@ const FormItem = props => {
                     type={type}
                     name={name}
                     id={name}
+                    placeholder={props.input.placeholder}
                     onChange={evt => props.callback(evt, name)}
                     value={props.value}
                     required={required}

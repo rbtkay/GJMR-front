@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 // component
-import ModuleNotation from "../module/ModuleNotation";
 import Table from "../Table";
 import Loading from "../Loading";
 // actions
@@ -11,44 +10,29 @@ import { setLog } from "../../reducer/actions";
 // functions
 import { request, responseManagment } from "../../functions/fetch";
 
-class Dashboard extends Component {
+class ModuleList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             loading: false,
-            modules: [],
-            school_year: null
+            modules: []
         };
 
         this.responseManagment = responseManagment.bind(this);
-        this.updateModule = this.updateModule.bind(this);
     }
 
     UNSAFE_componentWillMount() {
-        if (this.props.user.role !== this.props.match.params.role) {
-            this.props.history.push(`/dashboard/${this.props.user.role}`);
-        }
         this.getModules();
     }
 
     async getModules() {
         this.setState({ loading: true });
-        const response = await request(
-            `/school_year/student/${this.props.user._id}`,
-            this.props.user.token
-        );
-        console.log("school year", response);
+        const response = await request(`/modules`, this.props.user.token);
+        console.log("modules", response);
         if (this.responseManagment(response)) {
-            const response_next = await request(
-                `/module_in_schoolyear/${response.result.school_year_id}`,
-                this.props.user.token
-            );
-            console.log("modules", response_next);
-            if (this.responseManagment(response_next)) {
-                this.setState({ modules: response_next.result });
-                this.getTeachersModules(response_next.result);
-            }
+            this.setState({ modules: response.result });
+            this.getTeachersModules(response.result);
         }
         this.setState({ loading: false });
     }
@@ -62,7 +46,6 @@ class Dashboard extends Component {
             method: "POST",
             body: teachers_id
         });
-        console.log("teacherResponse", response);
         if (this.responseManagment(response)) {
             if (response.result.length) {
                 modules = modules.map(module => {
@@ -72,18 +55,15 @@ class Dashboard extends Component {
                     return module;
                 });
             }
+            this.getNotesModules(modules);
             this.setState({ modules });
         }
-        // don't need teacher to get module note
-        // but wait for result to don't override it
-        this.getNotesModules(modules);
     }
 
     async getNotesModules(modules) {
         let modules_id = modules.map(module => module._id);
-        console.log("modules_id", modules_id);
         const response = await request(
-            `/notes/student/${this.props.user._id}`,
+            `/notes/modules`,
             this.props.user.token,
             {
                 method: "POST",
@@ -93,24 +73,33 @@ class Dashboard extends Component {
         console.log("notes", response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
-                module.note = response.result.filter(
+                module.notes = response.result.filter(
                     note => note.module_id === module._id
-                )[0];
+                );
+                module.average = Math.round(
+                    module.notes.reduce((sum, note) => sum + note.value, 0) /
+                        module.notes.length
+                );
                 this.setState({ modules });
                 return module;
             });
         }
     }
 
-    updateModule(note, module_id) {
-        console.log("module update");
-        this.setState(
-            this.state.modules.map(module => {
-                if (module._id === module_id) {
-                    module.note = note;
-                }
-            })
+    async deleteModule(id) {
+        const response = await request(
+            `/modules/${id}`,
+            this.props.user.token,
+            {
+                method: "DELETE"
+            }
         );
+        if (response.status === 201 || response.status === 200) {
+            console.log("module supprimé");
+            this.setState({
+                modules: this.state.modules.filter(module => module._id !== id)
+            });
+        }
     }
 
     render() {
@@ -122,20 +111,31 @@ class Dashboard extends Component {
                 ) : this.state.modules.length ? (
                     <Table
                         className="modules"
-                        labels={["Nom", "Intervenant", "Note", "Appréciation"]}
+                        labels={["Nom", "Intervenant", "Moyenne", ""]}
                     >
                         {this.state.modules.map((module, i) => (
-                            <ModuleNotation
-                                module={module}
-                                key={i}
-                                refresh_note={
-                                    module.note ? module.note.value : null
-                                }
-                                refresh_teacher={
-                                    module.teacher ? module.teacher : null
-                                }
-                                updateModule={this.updateModule}
-                            />
+                            <tr key={i}>
+                                <td>
+                                    <a href={`/modules/${module._id}`}>
+                                        {module.name}
+                                    </a>
+                                </td>
+                                <td>
+                                    {module.teacher
+                                        ? `${module.teacher.first_name} ${module.teacher.last_name}`
+                                        : null}
+                                </td>
+                                <td>{module.average ? module.average : "-"}</td>
+                                <td>
+                                    <button
+                                        onClick={evt =>
+                                            this.deleteModule(module._id)
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+                                </td>
+                            </tr>
                         ))}
                     </Table>
                 ) : null}
@@ -153,5 +153,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+    connect(mapStateToProps, mapDispatchToProps)(ModuleList)
 );

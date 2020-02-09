@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 // component
-import ModuleTeaser from "../module/ModuleTeaser";
+import Table from "../Table";
 import Loading from "../Loading";
 // actions
 import { setLog } from "../../reducer/actions";
@@ -31,8 +31,11 @@ class DashboardTeacher extends Component {
 
     async getModules() {
         this.setState({ loading: true });
-        const response = await request(`/modules/teachers/${this.props.user._id}`, this.props.user.token);
-        console.log('modules', response);
+        const response = await request(
+            `/modules/teachers/${this.props.user._id}`,
+            this.props.user.token
+        );
+        console.log("modules", response);
         if (this.responseManagment(response)) {
             this.setState({ modules: response.result });
             this.getNotesModules(response.result);
@@ -50,7 +53,7 @@ class DashboardTeacher extends Component {
                 body: modules_id
             }
         );
-        console.log('notes', response);
+        console.log("notes", response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
                 module.notes = response.result.filter(
@@ -68,14 +71,22 @@ class DashboardTeacher extends Component {
     render() {
         return (
             <section className="module-list">
+                <h2>Liste des modules</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.modules.length ? (
-                    <ul className="modules">
+                    <Table className="modules" labels={["Nom", "Moyenne"]}>
                         {this.state.modules.map((module, i) => (
-                            <ModuleTeaser module={module} key={i} />
+                            <tr key={i}>
+                            <td>
+                                <a href={`/modules/${module._id}`}>
+                                    {module.name}
+                                </a>
+                            </td>
+                                <td>{module.average ? module.average : "-"}</td>
+                            </tr>
                         ))}
-                    </ul>
+                    </Table>
                 ) : null}
             </section>
         );
