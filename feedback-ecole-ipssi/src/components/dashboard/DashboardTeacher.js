@@ -77,7 +77,6 @@ class DashboardTeacher extends Component {
                         ))}
                     </ul>
                 ) : null}
-                <div>teacher</div>
             </section>
         );
     }

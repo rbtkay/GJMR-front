@@ -34,9 +34,6 @@ class Router extends Component {
                 <Route exact path="/admin/add-module/">
                     <AddModule />
                 </Route>
-                <Route exact path="/admin/add-module/">
-                    <AddModule />
-                </Route>
                 <Route exact path="/admin/add-school-year/">
                     <AddSchoolYear />
                 </Route>

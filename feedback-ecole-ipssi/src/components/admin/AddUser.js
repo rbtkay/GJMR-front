@@ -9,6 +9,7 @@ import Loading from "../Loading";
 import { setLog } from "../../reducer/actions";
 // functions
 import { request, responseManagment } from "../../functions/fetch";
+import { STORED_USER } from "../../constants/index";
 
 class AddUser extends Component {
     constructor(props) {
@@ -49,14 +50,22 @@ class AddUser extends Component {
     }
 
     async postUser(body) {
-        const response = await request(`/user`, this.props.user.token, {
-            method: "POST",
-            body
-        });
-        console.log("response", response);
-        if (response.status === 201 || response.status === 200) {
-            console.log("user inserted");
-            this.props.history.push(`/dashboard/${this.props.user.role}`);
+        if (localStorage.getItem(STORED_USER) == null) {
+            this.props.history.push(`/login`);
+        } else {
+            const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
+
+            const response = await request(`/user`, token, {
+                method: "POST",
+                body
+            });
+            console.log("response", response);
+            if (response.status === 201 || response.status === 200) {
+                console.log("user inserted");
+            } else if (response.status === 403) {
+                localStorage.clear();
+                this.props.history.push(`/login`);
+            }
         }
     }
 
@@ -103,8 +112,8 @@ class AddUser extends Component {
                 {this.state.loading ? (
                     <Loading />
                 ) : (
-                    <Form form_items={form_items} callback={this.postUser} />
-                )}
+                        <Form form_items={form_items} callback={this.postUser} />
+                    )}
             </main>
         );
     }
