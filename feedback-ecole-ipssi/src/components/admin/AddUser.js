@@ -25,8 +25,6 @@ class AddUser extends Component {
     }
 
     async UNSAFE_componentWillMount() {
-        console.log(this.props.user.role);
-        console.log(this.props.match.params.role);
         if (
             this.props.user.role !== "admin" ||
             (
