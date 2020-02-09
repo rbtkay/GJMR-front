@@ -52,20 +52,22 @@ class AddUser extends Component {
     }
 
     async postUser(body) {
-        console.log("body", body);
-
-        const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
-
-        const response = await request(`/user`, token, {
-            method: "POST",
-            body
-        });
-        console.log("response", response);
-        if (response.status === 201 || response.status === 200) {
-            console.log("user inserted");
-        } else if (response.status === 403) {
-            localStorage.clear();
+        if (localStorage.getItem(STORED_USER) == null) {
             this.props.history.push(`/login`);
+        } else {
+            const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
+
+            const response = await request(`/user`, token, {
+                method: "POST",
+                body
+            });
+            console.log("response", response);
+            if (response.status === 201 || response.status === 200) {
+                console.log("user inserted");
+            } else if (response.status === 403) {
+                localStorage.clear();
+                this.props.history.push(`/login`);
+            }
         }
     }
 

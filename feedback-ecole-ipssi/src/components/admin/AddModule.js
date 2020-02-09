@@ -37,6 +37,8 @@ class AddModule extends Component {
         let options_school_year = [];
         let options_teacher = [];
 
+        console.log("getSelectsValues", this.props);
+
         const response_school_year = await request(
             `/school-year`,
             this.props.user.token
@@ -62,28 +64,27 @@ class AddModule extends Component {
     }
 
     async postModule(body) {
-        this.setState({ loading: true });
-        console.log(body);
-        if (localStorage.getItem(STORED_USER) == null) {
+        if (localStorage.getItem(STORED_USER) == null)
             this.props.history.push(`/login`);
-        } else {
-            const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
-            let response = await request(`/modules`, token, {
-                method: "POST",
-                body
-            });
-            if (response.status === 201) {
-                console.log("module inserted");
-                // this.props.history.push(`/dashboard/${this.props.user.role}`);
-            } else if (response.status === 403) {
-                localStorage.clear();
-                this.props.history.push(`/login`);
-            }
+
+        const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
+        let response = await request(`/modules`, token, {
+            method: "POST",
+            body
+        });
+        if (response.status === 201) {
+            console.log("module inserted");
+        } else if (response.status === 403) {
+            localStorage.clear();
+            this.props.history.push(`/login`);
         }
         this.setState({ loading: false });
     }
 
     render() {
+        if (localStorage.getItem(STORED_USER) == null) {
+            this.props.history.push(`/login`);
+        }
         return (
             <main>
                 <h1>Nouveau Module</h1>
