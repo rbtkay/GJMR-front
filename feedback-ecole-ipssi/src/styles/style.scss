@@ -25,4 +25,7 @@ $pink: #E52761;
 $font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 // Import
 // ======
+@import "sass/app";
+@import "sass/header";
+@import "sass/footer";
 @import "sass/loading";
