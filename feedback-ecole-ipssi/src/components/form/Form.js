@@ -59,7 +59,6 @@ class Form extends Component {
 
         // }
 
-        console.log("in the form ", this.props)
         return (
             <form className="form" id="formid" onSubmit={this.handleSubmit}>
                 <div className="form-item-list">

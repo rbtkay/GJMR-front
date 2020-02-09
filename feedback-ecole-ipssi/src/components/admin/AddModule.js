@@ -6,12 +6,17 @@ import { request } from "../../functions/fetch";
 import { STORED_USER } from "../../constants";
 import { setUser, setLog } from '../../reducer/actions';
 import Loading from '../Loading';
+
+import { API_URL } from "../../constants";
+
 class AddModule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true
         };
+
+        this.addModule = this.addModule.bind(this);
     }
 
     async UNSAFE_componentWillMount() {
@@ -20,7 +25,6 @@ class AddModule extends Component {
         let options_teacher = responseTeachers.result.map(teacher => {
             return teacher
         })
-        console.log(responseTeachers)
         let options = response.result.map(promo => {
             return promo
         })
@@ -28,7 +32,6 @@ class AddModule extends Component {
     }
 
     render() {
-        console.log("Add Module", this.state)
         if (this.state.isLoading) {
             return (
                 <Loading />
@@ -66,12 +69,19 @@ class AddModule extends Component {
 
         console.log("adding module", new_module);
         // TODO: add token
-        let response = await request(`/module`, { method: "POST", body: new_module });
-        if (response.status === 201) {
-            console.log("user inserted");
-            this.props.history.push(`/${this.props.user.role}/dashboard`);
+        let response = await request(`/modules`, null, { method: "POST", body: new_module });
+        console.log("response", response)
+        if (response.status === 201 || response.status === 200) {
+            // this.props.history.push(`/${this.props.user.role}/dashboard`);
         }
-        localStorage.getItem(STORED_USER);
+        // localStorage.getItem(STORED_USER);
+        // fetch(API_URL + '/modules', {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: new_module
+        // }).then(result => {
+        //     console.log(result);
+        // })
     }
 
 }

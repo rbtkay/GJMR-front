@@ -26,15 +26,15 @@ class Dashboard extends Component {
         if (this.props.user.role !== this.props.match.params.role) {
             this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
-        // this.getModules();
+        this.getModules();
     }
 
     async getModules() {
         this.setState({ loading: true });
-        // const response = await request(`"/school_year/student/${this.props.user._id}`, this.props.user.token);
-        // const response = await request(`/modules/school_year/:school_year_id`, this.props.user.token);
-        // const response = await request(`/modules/:module_id`, this.props.user.token);
-        // console.log(response);
+        // // const response = await request(`/school_year/student/${this.props.user._id}`, this.props.user.token);
+        // const response = await request(`/modules/school_year/:school_year_id`, null, {});
+        // // const response = await request(`/modules/:module_id`, this.props.user.token);
+        // console.log("moduleResponse", response);
         // if (this.responseManagment(response)) {
         //     this.setState({ modules: response.result });
         //     this.getTeachersModules(response.result);
@@ -51,7 +51,7 @@ class Dashboard extends Component {
             method: "POST",
             body: teachers_id
         });
-        console.log(response);
+        console.log("teacherResponse", response);
         if (this.responseManagment(response)) {
             if (response.result.length) {
                 modules = modules.map(module => {
@@ -68,7 +68,7 @@ class Dashboard extends Component {
 
     async getNotesModules(modules) {
         let modules_id = modules.map(module => module._id);
-        console.log(modules_id);
+        console.log("modules_id", modules_id);
         const response = await request(
             `/notes/student/${this.props.user._id}`,
             this.props.user.token,
@@ -77,7 +77,7 @@ class Dashboard extends Component {
                 body: modules_id
             }
         );
-        console.log(response);
+        console.log("notes", response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
                 module.note = response.result.filter(

@@ -1,7 +1,7 @@
 // module
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 // component
 import ModuleTeaser from "../module/ModuleTeaser";
 import Loading from "../Loading";
@@ -29,7 +29,7 @@ class DashboardAdmin extends Component {
     async getModules() {
         this.setState({ loading: true });
         const response = await request(`/modules`, this.props.user.token);
-        console.log(response);
+        console.log("modules", response);
         if (this.responseManagment(response)) {
             this.setState({ modules: response.result });
             this.getTeachersModules(response.result);
@@ -46,7 +46,6 @@ class DashboardAdmin extends Component {
             method: "POST",
             body: teachers_id
         });
-        console.log(response);
         if (this.responseManagment(response)) {
             if (response.result.length) {
                 modules = modules.map(module => {
@@ -63,7 +62,6 @@ class DashboardAdmin extends Component {
 
     async getNotesModules(modules) {
         let modules_id = modules.map(module => module._id);
-        console.log(modules_id);
         const response = await request(
             `/notes/modules`,
             this.props.user.token,
@@ -72,7 +70,7 @@ class DashboardAdmin extends Component {
                 body: modules_id
             }
         );
-        console.log(response);
+        // console.log(response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
                 module.notes = response.result.filter(
@@ -89,30 +87,32 @@ class DashboardAdmin extends Component {
 
     render() {
         return (
-            <nav className="creation">
-                <ul>
-                    <li>
-                        <Link to={`/admin/add-user/student`} className="btn">Ajouter un eleve</Link>
-                    </li>
-                    <li>
-                        <Link to={`/admin/add-user/teacher`} className="btn">Ajouter un intervenant</Link>
-                    </li>
-                    <li>
-                        <Link to={`/admin/add-module`} className="btn">Ajouter un module</Link>
-                    </li>
-                </ul>
-            </nav>
-            <section className="module-list">
-                {this.state.loading ? (
-                    <Loading />
-                ) : this.state.modules.length ? (
-                    <ul className="modules">
-                        {this.state.modules.map((module, i) => (
-                            <ModuleTeaser module={module} key={i} />
-                        ))}
+            <main>
+                <nav className="creation">
+                    <ul>
+                        <li>
+                            <Link to={`/admin/add-user/student`} className="btn">Ajouter un eleve</Link>
+                        </li>
+                        <li>
+                            <Link to={`/admin/add-user/teacher`} className="btn">Ajouter un intervenant</Link>
+                        </li>
+                        <li>
+                            <Link to={`/admin/add-module`} className="btn">Ajouter un module</Link>
+                        </li>
                     </ul>
-                ) : null}
-            </section>
+                </nav>
+                <section className="module-list">
+                    {this.state.loading ? (
+                        <Loading />
+                    ) : this.state.modules.length ? (
+                        <ul className="modules">
+                            {this.state.modules.map((module, i) => (
+                                <ModuleTeaser module={module} key={i} />
+                            ))}
+                        </ul>
+                    ) : null}
+                </section>
+            </main>
         );
     }
 }

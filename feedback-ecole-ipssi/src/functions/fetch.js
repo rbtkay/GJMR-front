@@ -7,6 +7,7 @@ import { API_URL } from "../constants";
  * @param {object} options
  */
 export function request(url, token, options = {}) {
+    console.log("url", url)
     options.headers = {};
     if (options.body) {
         options.headers["Content-Type"] = "application/json";

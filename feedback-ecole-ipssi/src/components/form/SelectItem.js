@@ -26,7 +26,6 @@ const SelectItem = props => {
         )
 
     } else if (select_role == "module") {
-        console.log("module", props)
         let options_school_year = props.options_school_year;
         let options_teacher = props.options_teacher;
         return (
