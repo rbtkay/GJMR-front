@@ -98,6 +98,10 @@ label {
   margin-right: 10px;
 }
 
+label.textarea {
+  vertical-align: top;
+}
+
 button,
 .btn,
 .form-item,
@@ -118,17 +122,6 @@ button,
 
 .login {
   padding-top: 0;
-}
-
-.note-form {
-  -webkit-transition: max-height 0.5s;
-  transition: max-height 0.5s;
-  overflow: hidden;
-  max-height: 150px;
-}
-
-.note-form.hidden {
-  max-height: 0;
 }
 
 table {
@@ -156,6 +149,59 @@ table thead tr {
 
 table tr:nth-child(even) {
   background-color: rgba(4, 118, 187, 0.3);
+}
+
+table.modules td {
+  position: relative;
+}
+
+table.modules td a:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.tr-clickable {
+  cursor: pointer;
+}
+
+.tr-hiddenable {
+  border-top: 1px solid white;
+}
+
+.tr-hiddenable td {
+  background-color: #021B48;
+  color: white;
+}
+
+.tr-hiddenable td .animated-cell {
+  -webkit-transition: max-height 0.5s;
+  transition: max-height 0.5s;
+  overflow: hidden;
+  max-height: 150px;
+}
+
+.tr-hiddenable.hidden {
+  overflow: hidden;
+}
+
+.tr-hiddenable.hidden:after {
+  content: none;
+}
+
+.tr-hiddenable.hidden td {
+  padding-top: 0;
+  padding-bottom: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.tr-hiddenable.hidden td .animated-cell {
+  max-height: 0;
 }
 
 .loading {

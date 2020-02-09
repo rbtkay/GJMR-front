@@ -71,6 +71,7 @@ class DashboardTeacher extends Component {
     render() {
         return (
             <section className="module-list">
+                <h2>Liste des modules</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.modules.length ? (

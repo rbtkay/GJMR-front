@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 // component
 import ModuleNotation from "../module/ModuleNotation";
+import Table from "../Table";
 import Loading from "../Loading";
 // actions
 import { setLog } from "../../reducer/actions";
@@ -115,21 +116,28 @@ class Dashboard extends Component {
     render() {
         return (
             <section className="module-list">
+                <h2>Liste des modules</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.modules.length ? (
-                    <ul className="modules">
+                    <Table
+                        className="modules"
+                        labels={["Nom", "Intervenant", "Note", "Appréciation"]}
+                    >
                         {this.state.modules.map((module, i) => (
                             <ModuleNotation
                                 module={module}
                                 key={i}
-                                force_refresh={
+                                refresh_note={
                                     module.note ? module.note.value : null
+                                }
+                                refresh_teacher={
+                                    module.teacher ? module.teacher : null
                                 }
                                 updateModule={this.updateModule}
                             />
                         ))}
-                    </ul>
+                    </Table>
                 ) : null}
             </section>
         );
