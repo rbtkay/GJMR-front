@@ -4,8 +4,13 @@
 body
     margin: 0
     padding: 0
-    a
-        color: black
-
     main
         padding: 15px
+    a
+        color: black
+    .note-form
+        transition: max-height 0.5s
+        overflow: hidden
+        max-height: 100px //arbitraire
+        &.hidden
+            max-height: 0

@@ -22,8 +22,6 @@ class Form extends Component {
     }
 
     handleChange(evt, name) {
-        console.log(name);
-        console.log(evt.target.value);
         let nextState = {};
         nextState[name] = evt.target.value;
         this.setState(nextState);

@@ -16,10 +16,12 @@ class Dashboard extends Component {
 
         this.state = {
             loading: false,
-            modules: null
+            modules: [],
+            school_year: null
         };
 
         this.responseManagment = responseManagment.bind(this);
+        this.updateModule = this.updateModule.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -31,14 +33,22 @@ class Dashboard extends Component {
 
     async getModules() {
         this.setState({ loading: true });
-        // // const response = await request(`/school_year/student/${this.props.user._id}`, this.props.user.token);
-        // const response = await request(`/modules/school_year/:school_year_id`, null, {});
-        // // const response = await request(`/modules/:module_id`, this.props.user.token);
-        // console.log("moduleResponse", response);
-        // if (this.responseManagment(response)) {
-        //     this.setState({ modules: response.result });
-        //     this.getTeachersModules(response.result);
-        // }
+        const response = await request(
+            `/school_year/student/${this.props.user._id}`,
+            this.props.user.token
+        );
+        console.log("school year", response);
+        if (this.responseManagment(response)) {
+            const response_next = await request(
+                `/module_in_schoolyear/${response.result.school_year_id}`,
+                this.props.user.token
+            );
+            console.log("modules", response_next);
+            if (this.responseManagment(response_next)) {
+                this.setState({ modules: response_next.result });
+                this.getTeachersModules(response_next.result);
+            }
+        }
         this.setState({ loading: false });
     }
 
@@ -61,9 +71,11 @@ class Dashboard extends Component {
                     return module;
                 });
             }
-            this.getNotesModules(modules);
             this.setState({ modules });
         }
+        // don't need teacher to get module note
+        // but wait for result to don't override it
+        this.getNotesModules(modules);
     }
 
     async getNotesModules(modules) {
@@ -89,6 +101,17 @@ class Dashboard extends Component {
         }
     }
 
+    updateModule(note, module_id) {
+        console.log("module update");
+        this.setState(
+            this.state.modules.map(module => {
+                if (module._id === module_id) {
+                    module.note = note;
+                }
+            })
+        );
+    }
+
     render() {
         return (
             <section className="module-list">
@@ -97,7 +120,14 @@ class Dashboard extends Component {
                 ) : this.state.modules.length ? (
                     <ul className="modules">
                         {this.state.modules.map((module, i) => (
-                            <ModuleNotation module={module} key={i} />
+                            <ModuleNotation
+                                module={module}
+                                key={i}
+                                force_refresh={
+                                    module.note ? module.note.value : null
+                                }
+                                updateModule={this.updateModule}
+                            />
                         ))}
                     </ul>
                 ) : null}
