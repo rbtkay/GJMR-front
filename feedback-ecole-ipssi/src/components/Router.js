@@ -22,7 +22,7 @@ class Router extends Component {
                 <Route exact path="/logout">
                     <Logout />
                 </Route>
-                <Route exact path="/dashboard/:role">
+                <Route path="/dashboard/:role">
                     <Dashboard/>
                 </Route>
                 <Route exact path="/modules/:role/:id">

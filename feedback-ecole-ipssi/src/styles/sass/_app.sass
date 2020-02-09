@@ -4,13 +4,74 @@
 body
     margin: 0
     padding: 0
-    main
-        padding: 15px
+
+main
+    padding: 15px
+
+header
+    padding: 15px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    .user-name
+        text-transform: capitalize
+        margin-right: 15px
+
+footer
+    background-color: $dark_blue
+    text-align: center
+    color: white
+    padding: 40px 15px
     a
-        color: black
-    .note-form
-        transition: max-height 0.5s
-        overflow: hidden
-        max-height: 100px //arbitraire
-        &.hidden
-            max-height: 0
+        color: white
+
+h1
+    margin: 0 -15px 30px
+    padding: 15px
+    color: white
+    background-color: $blue
+
+nav ul 
+    display: flex
+    margin: 0 0 15px
+    padding: 0
+    li
+        padding: 5px 10px
+        list-style-type: none
+
+a
+    color: black
+
+.sr-only
+    // from bootstrap
+    position: absolute
+    width: 1px
+    height: 1px
+    padding: 0
+    margin: -1px
+    overflow: hidden
+    clip: rect(0,0,0,0)
+    border: 0
+
+.note-form
+    transition: max-height 0.5s
+    overflow: hidden
+    max-height: 100px //arbitraire
+    &.hidden
+        max-height: 0
+
+table
+    border: 0
+    margin-bottom: 15px
+    thead, tbody, tr, td, th
+        border: 0
+        border-spacing: 0
+        border-collapse: collapse
+    td, th
+        padding: 10px 15px
+    th
+        text-transform: uppercase
+    thead tr
+        background-color: transparentize($blue, 0.6)
+    tr:nth-child(even)
+        background-color: transparentize($blue, 0.7)

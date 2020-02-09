@@ -8,27 +8,21 @@ body {
   padding: 0;
 }
 
-body main {
+main {
   padding: 15px;
-}
-
-body a {
-  color: black;
-}
-
-body .note-form {
-  -webkit-transition: max-height 0.5s;
-  transition: max-height 0.5s;
-  overflow: hidden;
-  max-height: 100px;
-}
-
-body .note-form.hidden {
-  max-height: 0;
 }
 
 header {
   padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 header .user-name {
@@ -37,7 +31,7 @@ header .user-name {
 }
 
 footer {
-  background-color: #0476BB;
+  background-color: #021B48;
   text-align: center;
   color: white;
   padding: 40px 15px;
@@ -45,6 +39,79 @@ footer {
 
 footer a {
   color: white;
+}
+
+h1 {
+  margin: 0 -15px 30px;
+  padding: 15px;
+  color: white;
+  background-color: #0476BB;
+}
+
+nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+nav ul li {
+  padding: 5px 10px;
+  list-style-type: none;
+}
+
+a {
+  color: black;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.note-form {
+  -webkit-transition: max-height 0.5s;
+  transition: max-height 0.5s;
+  overflow: hidden;
+  max-height: 100px;
+}
+
+.note-form.hidden {
+  max-height: 0;
+}
+
+table {
+  border: 0;
+  margin-bottom: 15px;
+}
+
+table thead, table tbody, table tr, table td, table th {
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  padding: 10px 15px;
+}
+
+table th {
+  text-transform: uppercase;
+}
+
+table thead tr {
+  background-color: rgba(4, 118, 187, 0.4);
+}
+
+table tr:nth-child(even) {
+  background-color: rgba(4, 118, 187, 0.3);
 }
 
 .loading {
