@@ -3,7 +3,7 @@ import React, { Fragment, Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 // component
-import Form from "../form/Form";
+import FormNote from "../form/FormNote";
 import Loading from "../Loading";
 // actions
 import { setLog } from "../../reducer/actions";
@@ -29,17 +29,13 @@ class ModuleNotation extends Component {
     }
 
     async postNote(body) {
-        if (body.value > 20 || body.value < 0) {
-            // set log
-        } else {
-            const response = await request(`/notes`, this.props.user.token, {
-                method: "POST",
-                body
-            });
-            if (response.status === 201 || response.status === 200) {
-                console.log("note inserted");
-                this.props.updateModule(body, this.props.module._id);
-            }
+        const response = await request(`/notes`, this.props.user.token, {
+            method: "POST",
+            body
+        });
+        if (response.status === 201 || response.status === 200) {
+            console.log("note inserted");
+            this.props.updateModule(body, this.props.module._id);
         }
     }
 
@@ -68,12 +64,13 @@ class ModuleNotation extends Component {
                             {this.state.loading ? (
                                 <Loading />
                             ) : (
-                                <Form
+                                <FormNote
                                     form_items={[
                                         {
                                             type: "number",
                                             name: "value",
                                             label: "Note",
+                                            placeholder: "/20",
                                             required: true
                                         },
                                         {
