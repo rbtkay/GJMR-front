@@ -6,7 +6,7 @@ Ce projet est une application web construite avec la librairie Javascript, React
 
 ## Parcours Utilisateur
 
-*si le schéma n’apparaît pas correctement veuillez utiliser un markdown editor*
+*si le schéma n’apparaît pas correctement veuillez utiliser un markdown editor comme [stackedit.io](https://stackedit.io/)*
 ```mermaid
 
 graph LR
@@ -37,5 +37,26 @@ Dans le cas où c'est un **élève** il arrivera sur un dashboard lui affichant 
 Dans le cas où c'est un **intervenant** il arrivera sur un dashboard affichant les modules qu'il enseigne. il pourra donc voir la note qui lui a était attribue pour éventuellement améliorer ou pas sa pédagogie.  
 
 L'utilisateur peut depuis n'importe quel page décidé de "logout", il sera donc redirige vers le login-page
+
+## Sécurité
+Lors du login l'utilisateur reçoit un jeton d'authentification qui sera stocké dans le localStorage. ce jeton-là est responsable d'authentifier l'utilisateur lors de ses différents appels à l'api. Tant que le jeton sera valable l'utilisateur restera dans son l'espace et accédera aux données qui lui sont autorisées. le schéma ci-dessous démontre l'utilisation du jeton tout au long d'une session utilisateur.
+
+*si le schéma n’apparaît pas correctement veuillez utiliser un markdown editor comme [stackedit.io](https://stackedit.io/)*
+```mermaid
+
+graph LR
+A[Login Page] --> B{isTokenVerified} 
+A -- login-request --> S(End-Point)
+S -- token --> A
+B -- verified --> C[Espace Client]
+B -- unauthorized --> A
+C -- data-request --> V{verifierTokenInRequest}
+V -- verified --> S 
+S -- response --> C
+V -- rejected --> A
+```
+
+Comme le démontre le schéma ci-dessus au moment du login l'utilisateur reçoit un jeton qui lui permettra d’accéder à l’espace client. De plus, une fois a l’intérieur chaque requête émise par le client sera vérifiée, dans le cas où le jeton est valide. le client pourra communiquer avec le serveur, sinon il sera automatiquement rejeté sur le login page et devra saisir une nouvelle fois ses identifiants.
+
 
 
