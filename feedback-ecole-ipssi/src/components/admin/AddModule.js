@@ -1,89 +1,118 @@
-import React, { Component } from 'react'
+// modules
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import Form from '../form/Form'
-import { request } from "../../functions/fetch";
-import { STORED_USER } from "../../constants";
-import { setUser, setLog } from '../../reducer/actions';
-import Loading from '../Loading';
-
-import { API_URL } from "../../constants";
+// components
+import Form from "../form/Form";
+import Loading from "../Loading";
+// actions
+import { setLog } from "../../reducer/actions";
+// functions
+import { request, responseManagment } from "../../functions/fetch";
 
 class AddModule extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            isLoading: true
+            loading: false,
+            select_school_years: [],
+            select_teachers: []
         };
 
-        this.addModule = this.addModule.bind(this);
+        this.responseManagment = responseManagment.bind(this);
+        this.postModule = this.postModule.bind(this);
     }
 
-    async UNSAFE_componentWillMount() {
-        let response = await request(`/school-year`, { method: "GET" });
-        let responseTeachers = await request(`/users/role/teacher`, { method: "GET" })
-        let options_teacher = responseTeachers.result.map(teacher => {
-            return teacher
-        })
-        let options = response.result.map(promo => {
-            return promo
-        })
-        this.setState({ isLoading: false, select_school_year: options, select_teacher: options_teacher });
+    UNSAFE_componentWillMount() {
+        if (this.props.user.role !== 'admin') {
+            this.props.history.push(`/${this.props.user.role}/dashboard`);
+        }
+        this.getSelectsValues();
+    }
+
+    async getSelectsValues(){
+        this.setState({ loading: true });
+        let options_school_year = [];
+        let options_teacher = [];
+
+        const response_school_year = await request(
+            `/school-year`,
+            this.props.user.token
+        );
+        console.log(response_school_year);
+        if (this.responseManagment(response_school_year)) {
+            options_school_year = response_school_year.result;
+        }
+        const response_teachers = await request(
+            `/users/role/teacher`,
+            this.props.user.token
+        );
+        console.log(response_teachers);
+        if (this.responseManagment(response_teachers)) {
+            options_teacher = response_teachers.result;
+        }
+
+        this.setState({
+            loading: false,
+            select_school_years: options_school_year,
+            select_teachers: options_teacher
+        });
+    }
+
+    async postModule(body) {
+        this.setState({ loading: true });
+        console.log(body);
+        let response = await request(`/modules`, this.props.user.token, {
+            method: "POST",
+            body
+        });
+        if (response.status === 201) {
+            console.log("user inserted");
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
+        }
+        this.setState({ loading: false });
     }
 
     render() {
-        if (this.state.isLoading) {
-            return (
+        return (
+            <main>
+                <h1>Nouveau Module</h1>
+            {this.state.loading ?
                 <Loading />
-            )
-        } else {
-            return (
-                <main>
-                    <h1>Nouveau Module</h1>
-                    <Form
-                        form_items={[
-                            {
-                                type: "text",
-                                name: "module_title",
-                                label: "Titre du module",
-                                required: true
-                            },
-                        ]}
-                        select_role={window.location.href.split('-')[1]}
-                        select_school_year={this.state.select_school_year}
-                        select_teacher={this.state.select_teacher}
-                        callback={this.addModule}
-                    />
-
-                </main >
-            )
-        }
+            :
+                <Form
+                    form_items={[
+                        {
+                            type: "text",
+                            name: "name",
+                            label: "Nom du module",
+                            required: true
+                        },
+                        {
+                            type: "select",
+                            name: "school_year_id",
+                            label: "Promotions",
+                            options: this.state.select_school_years,
+                            required: true
+                        },
+                        {
+                            type: "select",
+                            name: "teacher_id",
+                            label: "Intervenant",
+                            options: this.state.select_teachers,
+                            required: true
+                        }
+                    ]}
+                    callback={this.postModule}
+                />}
+                </main>
+        );
     }
-
-    async addModule(form_result) {
-        let new_module = {
-            module_title: form_result['module_title'],
-            school_year: form_result["select_school_year"],
-            teacher_id: form_result["select_teacher"]
-        }
-
-        console.log("adding module", new_module);
-        // TODO: add token
-        let response = await request(`/modules`, null, { method: "POST", body: new_module });
-        console.log("response", response)
-        if (response.status === 201 || response.status === 200) {
-            // this.props.history.push(`/${this.props.user.role}/dashboard`);
-        }
-        // localStorage.getItem(STORED_USER);
-        // fetch(API_URL + '/modules', {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: new_module
-        // }).then(result => {
-        //     console.log(result);
-        // })
-    }
-
 }
 
-export default AddModule;
+const mapStateToProps = state => {
+    return { user: state.user };
+};
+
+export default withRouter(connect(mapStateToProps, {setLog})(AddModule));

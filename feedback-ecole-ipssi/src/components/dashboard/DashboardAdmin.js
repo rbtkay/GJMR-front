@@ -87,32 +87,42 @@ class DashboardAdmin extends Component {
 
     render() {
         return (
-            <main>
+            <section className="module-list">
                 <nav className="creation">
                     <ul>
                         <li>
-                            <Link to={`/admin/add-user/student`} className="btn">Ajouter un eleve</Link>
+                            <Link
+                                to={`/admin/add-user/student`}
+                                className="btn"
+                            >
+                                Ajouter un eleve
+                            </Link>
                         </li>
                         <li>
-                            <Link to={`/admin/add-user/teacher`} className="btn">Ajouter un intervenant</Link>
+                            <Link
+                                to={`/admin/add-user/teacher`}
+                                className="btn"
+                            >
+                                Ajouter un intervenant
+                            </Link>
                         </li>
                         <li>
-                            <Link to={`/admin/add-module`} className="btn">Ajouter un module</Link>
+                            <Link to={`/admin/add-module`} className="btn">
+                                Ajouter un module
+                            </Link>
                         </li>
                     </ul>
                 </nav>
-                <section className="module-list">
-                    {this.state.loading ? (
-                        <Loading />
-                    ) : this.state.modules.length ? (
-                        <ul className="modules">
-                            {this.state.modules.map((module, i) => (
-                                <ModuleTeaser module={module} key={i} />
-                            ))}
-                        </ul>
-                    ) : null}
-                </section>
-            </main>
+                {this.state.loading ? (
+                    <Loading />
+                ) : this.state.modules.length ? (
+                    <ul className="modules">
+                        {this.state.modules.map((module, i) => (
+                            <ModuleTeaser module={module} key={i} />
+                        ))}
+                    </ul>
+                ) : null}
+            </section>
         );
     }
 }

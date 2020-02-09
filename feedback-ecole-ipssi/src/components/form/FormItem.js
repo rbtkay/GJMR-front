@@ -1,6 +1,7 @@
 // module
 import React from "react";
 import PropTypes from "prop-types";
+
 const FormItem = props => {
     let name = props.input.name;
     let type = props.input.type;
@@ -17,7 +18,7 @@ const FormItem = props => {
                 <textarea
                     name={name}
                     id={name}
-                    onChange={evt => props.callback(evt)}
+                    onChange={evt => props.callback(evt, name)}
                     value={props.value}
                     required={required}
                 />
@@ -26,7 +27,7 @@ const FormItem = props => {
                     type={type}
                     name={name}
                     id={name}
-                    onChange={evt => props.callback(evt)}
+                    onChange={evt => props.callback(evt, name)}
                     value={props.value}
                     required={required}
                 />

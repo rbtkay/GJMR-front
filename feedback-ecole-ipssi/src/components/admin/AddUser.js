@@ -1,99 +1,115 @@
-import React, { Component } from 'react'
+// modules
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import Form from '../form/Form'
-import { request } from "../../functions/fetch";
-import { STORED_USER } from "../../constants";
-import { setUser, setLog } from '../../reducer/actions';
-import Loading from '../Loading';
-
+// components
+import Form from "../form/Form";
+import Loading from "../Loading";
+// actions
+import { setLog } from "../../reducer/actions";
+// functions
+import { request, responseManagment } from "../../functions/fetch";
 
 class AddUser extends Component {
     constructor(props) {
         super(props);
-        let user_role_url = window.location.href.split('/'); //used to know what kind of user to add
-        this.state = {
-            isLoading: true,
-            user_role: user_role_url[user_role_url.length - 1]
-        }
 
-        this.addUser = this.addUser.bind(this);
+        this.state = {
+            loading: false,
+            select_school_years: []
+        };
+
+        this.responseManagment = responseManagment.bind(this);
+        this.postUser = this.postUser.bind(this);
     }
 
     async UNSAFE_componentWillMount() {
-        // if (!this.props.user) {
-        //     this.props.history.push(`/${this.props.user.role}/dashboard`);
-        // }
-
-        // if (this.state.user != "student") {
-        //     this.setState({ isLoading: false, select_options: options });
-        //     return;
-        // }; //we don't need the schoolyears in case it is not a student 
-
-        let response = await request(`/school-year`, null, { method: "GET" });
-
-        this.setState({ isLoading: false, select_school_year: response.result });
-    }
-
-    render() {
-        let title = this.state.user_role == 'student' ? "etudiant" : "intervenant";
-        if (this.state.isLoading) {
-            return (<Loading />)
-        } else {
-            return (
-                <main>
-                    <h1>Nouvel {title}</h1>
-                    <Form
-                        form_items={[
-                            {
-                                type: "text",
-                                name: "last_name",
-                                label: "Nom",
-                                required: true
-                            },
-                            {
-                                type: "text",
-                                name: "first_name",
-                                label: "Prenom",
-                                required: true
-                            },
-                            {
-                                type: "text",
-                                name: "email",
-                                label: "Email",
-                                required: true
-                            },
-                        ]}
-                        select_role={this.state.user_role}
-                        select_school_year={this.state.select_school_year}
-                        callback={this.addUser}
-                    />
-
-                </main >
+        console.log(this.props.user.role);
+        console.log(this.props.match.params.role);
+        if (
+            this.props.user.role !== "admin" ||
+            (
+                this.props.match.params.role !== "admin" &&
+                this.props.match.params.role !== "student" &&
+                this.props.match.params.role !== "teacher"
             )
+        ) {
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
+        }
+
+        if (this.props.match.params.role === "student") {
+            this.setState({ loading: true });
+            const response = await request(
+                `/school-year`,
+                this.props.user.token
+            );
+            if (responseManagment(response)) {
+                this.setState({ select_school_years: response.result });
+            }
+            this.setState({ loading: false });
         }
     }
 
-    async addUser(form_result) {
-        console.log("formresult", form_result)
-        if (this.state.user_role != "teacher" && this.state.user_role != "student") this.props.history.push(`/login`)
-
-        let new_user = {
-            email: form_result['email'],
-            last_name: form_result['last_name'],
-            first_name: form_result['first_name'],
-            role: this.state.user_role,
-            school_year: form_result["select_school_year"]
-        }
-        console.log("new user", new_user);
-        //TODO: add token
-        let response = await request(`/user`, null, { method: "POST", body: new_user });
+    async postUser(body) {
+        console.log(body);
+        const response = await request(`/user`, this.props.user.token, {
+            method: "POST",
+            body
+        });
         console.log("response", response);
         if (response.status === 201 || response.status === 200) {
             console.log("user inserted");
-            // this.props.history.push(`/${this.props.user.role}/dashboard`);
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
-        // localStorage.getItem(STORED_USER);
+    }
+
+    render() {
+        let form_items = [
+            {
+                type: "text",
+                name: "last_name",
+                label: "Nom",
+                required: true
+            },
+            {
+                type: "text",
+                name: "first_name",
+                label: "Prénom",
+                required: true
+            },
+            {
+                type: "text",
+                name: "email",
+                label: "Email",
+                required: true
+            },
+            {
+                type: "hidden",
+                name: "role",
+                value: this.props.match.params.role,
+                required: true
+            }
+        ];
+        if (this.state.select_school_years.length) {
+            form_items.push({
+                type: "select",
+                name: "school_year_id",
+                label: "Promotions",
+                options: this.state.select_school_years,
+                required: true
+            });
+        }
+
+        return (
+            <main>
+                <h1>Nouvel {this.props.match.params.role}</h1>
+                {this.state.loading ? (
+                    <Loading />
+                ) : (
+                    <Form form_items={form_items} callback={this.postUser} />
+                )}
+            </main>
+        );
     }
 }
 
@@ -102,9 +118,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    setUser,
     setLog
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddUser));
-
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AddUser)
+);
