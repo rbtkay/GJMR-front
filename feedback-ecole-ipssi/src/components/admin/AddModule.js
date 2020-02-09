@@ -9,6 +9,7 @@ import Loading from "../Loading";
 import { setLog } from "../../reducer/actions";
 // functions
 import { request, responseManagment } from "../../functions/fetch";
+import { STORED_USER } from "../../constants/index";
 
 class AddModule extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class AddModule extends Component {
         this.getSelectsValues();
     }
 
-    async getSelectsValues(){
+    async getSelectsValues() {
         this.setState({ loading: true });
         let options_school_year = [];
         let options_teacher = [];
@@ -63,13 +64,21 @@ class AddModule extends Component {
     async postModule(body) {
         this.setState({ loading: true });
         console.log(body);
-        let response = await request(`/modules`, this.props.user.token, {
-            method: "POST",
-            body
-        });
-        if (response.status === 201) {
-            console.log("user inserted");
-            this.props.history.push(`/dashboard/${this.props.user.role}`);
+        if (localStorage.getItem(STORED_USER) == null) {
+            this.props.history.push(`/login`);
+        } else {
+            const token = JSON.parse(localStorage.getItem(STORED_USER)).token;
+            let response = await request(`/modules`, token, {
+                method: "POST",
+                body
+            });
+            if (response.status === 201) {
+                console.log("module inserted");
+                // this.props.history.push(`/dashboard/${this.props.user.role}`);
+            } else if (response.status === 403) {
+                localStorage.clear();
+                this.props.history.push(`/login`);
+            }
         }
         this.setState({ loading: false });
     }
@@ -78,35 +87,35 @@ class AddModule extends Component {
         return (
             <main>
                 <h1>Nouveau Module</h1>
-            {this.state.loading ?
-                <Loading />
-            :
-                <Form
-                    form_items={[
-                        {
-                            type: "text",
-                            name: "name",
-                            label: "Nom du module",
-                            required: true
-                        },
-                        {
-                            type: "select",
-                            name: "school_year_id",
-                            label: "Promotions",
-                            options: this.state.select_school_years,
-                            required: true
-                        },
-                        {
-                            type: "select",
-                            name: "teacher_id",
-                            label: "Intervenant",
-                            options: this.state.select_teachers,
-                            required: true
-                        }
-                    ]}
-                    callback={this.postModule}
-                />}
-                </main>
+                {this.state.loading ?
+                    <Loading />
+                    :
+                    <Form
+                        form_items={[
+                            {
+                                type: "text",
+                                name: "name",
+                                label: "Nom du module",
+                                required: true
+                            },
+                            {
+                                type: "select",
+                                name: "school_year_id",
+                                label: "Promotions",
+                                options: this.state.select_school_years,
+                                required: true
+                            },
+                            {
+                                type: "select",
+                                name: "teacher_id",
+                                label: "Intervenant",
+                                options: this.state.select_teachers,
+                                required: true
+                            }
+                        ]}
+                        callback={this.postModule}
+                    />}
+            </main>
         );
     }
 }
@@ -115,4 +124,4 @@ const mapStateToProps = state => {
     return { user: state.user };
 };
 
-export default withRouter(connect(mapStateToProps, {setLog})(AddModule));
+export default withRouter(connect(mapStateToProps, { setLog })(AddModule));

@@ -26,9 +26,9 @@ class Login extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        if (this.props.user) {
-            this.props.history.push(`/dashboard/${this.props.user.role}`);
-        }
+        // if (this.props.user) {
+        //     this.props.history.push(`/dashboard/${this.props.user.role}`);
+        // }
     }
 
     // Use form values to get User information from API
@@ -43,6 +43,7 @@ class Login extends Component {
         if (this.responseManagment(response)) {
             const user = response.result;
             this.props.setUser(user);
+            console.log(response)
             localStorage.setItem(STORED_USER, JSON.stringify(user));
             this.props.history.push(`/dashboard/${user.role}`);
         } else {
