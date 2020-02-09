@@ -18,6 +18,7 @@ const FormItem = props => {
                 <textarea
                     name={name}
                     id={name}
+                    placeholder={props.input.placeholder}
                     onChange={evt => props.callback(evt, name)}
                     value={props.value}
                     required={required}
@@ -27,6 +28,7 @@ const FormItem = props => {
                     type={type}
                     name={name}
                     id={name}
+                    placeholder={props.input.placeholder}
                     onChange={evt => props.callback(evt, name)}
                     value={props.value}
                     required={required}
