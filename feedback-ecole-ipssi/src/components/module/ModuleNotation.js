@@ -40,27 +40,46 @@ class ModuleNotation extends Component {
     }
 
     render() {
-        console.log(this.props.module);
         return (
-            <li className="module">
-                <span>{this.props.module.name}</span>
-                {this.props.module.teacher ? (
-                    <span> {this.props.module.teacher.last_name}</span>
-                ) : null}
-                {this.props.module.note ? (
-                    <Fragment>
-                        <span> {this.props.module.note.value}</span>
-                        <span> {this.props.module.note.comment}</span>
-                    </Fragment>
-                ) : (
-                    <Fragment>
-                        <button onClick={this.toggleNoteForm}>Noter</button>
-                        <div
-                            className={
-                                "note-form" +
-                                (this.state.hidden ? " hidden" : "")
-                            }
-                        >
+            <Fragment>
+                <tr
+                    className="tr-clickable"
+                    onClick={
+                        !this.props.module.note ? this.toggleNoteForm : null
+                    }
+                >
+                    <td>
+                        <a href={`/modules/${this.props.module._id}`}>
+                            {this.props.module.name}
+                        </a>
+                    </td>
+                    <td>
+                        {this.props.module.teacher
+                            ? `${this.props.module.teacher.first_name} ${this.props.module.teacher.last_name}`
+                            : null}
+                    </td>
+                    {this.props.module.note ? (
+                        <Fragment>
+                            <td> {this.props.module.note.value}</td>
+                            <td> {this.props.module.note.comment}</td>
+                        </Fragment>
+                    ) : (
+                        <Fragment>
+                            <td>
+                                <button>Noter</button>
+                            </td>
+                            <td>-</td>
+                        </Fragment>
+                    )}
+                </tr>
+                <tr
+                    className={
+                        "tr-hiddenable" + (this.state.hidden ? " hidden" : "")
+                    }
+                >
+                    <td colSpan="4">
+                        <div className="animated-cell">
+                            {" "}
                             {this.state.loading ? (
                                 <Loading />
                             ) : (
@@ -96,9 +115,9 @@ class ModuleNotation extends Component {
                                 />
                             )}
                         </div>
-                    </Fragment>
-                )}
-            </li>
+                    </td>
+                </tr>
+            </Fragment>
         );
     }
 }

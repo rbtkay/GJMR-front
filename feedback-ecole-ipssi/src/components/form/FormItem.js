@@ -10,7 +10,7 @@ const FormItem = props => {
 
     return (
         <div className="form-item form-group">
-            <label htmlFor={name}>
+            <label htmlFor={name} className={props.input.type}>
                 {/* Add '*' to required input's label */}
                 {label}{required ? "\u00A0*" : ""}
             </label>
