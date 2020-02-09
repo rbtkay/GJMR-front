@@ -111,6 +111,11 @@ class DashboardAdmin extends Component {
                                 Ajouter un module
                             </Link>
                         </li>
+                        <li>
+                            <Link to={`/admin/add-school-year`} className="btn">
+                                Ajouter une session
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
                 {this.state.loading ? (

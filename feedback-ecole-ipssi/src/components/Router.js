@@ -10,6 +10,7 @@ import Dashboard from "./dashboard/Dashboard";
 import AddUser from "./admin/AddUser";
 import AddModule from "./admin/AddModule";
 import Page404 from "./Page404";
+import AddSchoolYear from "./admin/AddSchoolYear";
 
 class Router extends Component {
     render() {
@@ -32,6 +33,12 @@ class Router extends Component {
                 </Route>
                 <Route exact path="/admin/add-module/">
                     <AddModule />
+                </Route>
+                <Route exact path="/admin/add-module/">
+                    <AddModule />
+                </Route>
+                <Route exact path="/admin/add-school-year/">
+                    <AddSchoolYear />
                 </Route>
                 <Route exact path="/404">
                     <Page404/>
