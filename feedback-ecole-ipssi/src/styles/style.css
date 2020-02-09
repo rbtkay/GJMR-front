@@ -8,12 +8,23 @@ body {
   padding: 0;
 }
 
+body main {
+  padding: 15px;
+}
+
 body a {
   color: black;
 }
 
-body main {
-  padding: 15px;
+body .note-form {
+  -webkit-transition: max-height 0.5s;
+  transition: max-height 0.5s;
+  overflow: hidden;
+  max-height: 100px;
+}
+
+body .note-form.hidden {
+  max-height: 0;
 }
 
 header {

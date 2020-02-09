@@ -70,7 +70,7 @@ class DashboardAdmin extends Component {
                 body: modules_id
             }
         );
-        // console.log(response);
+        console.log('notes', response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
                 module.notes = response.result.filter(

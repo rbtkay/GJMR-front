@@ -30,10 +30,9 @@ class DashboardTeacher extends Component {
     }
 
     async getModules() {
-        console.log(this.props.user);
         this.setState({ loading: true });
         const response = await request(`/modules/teachers/${this.props.user._id}`, this.props.user.token);
-        console.log(response);
+        console.log('modules', response);
         if (this.responseManagment(response)) {
             this.setState({ modules: response.result });
             this.getNotesModules(response.result);
@@ -43,7 +42,6 @@ class DashboardTeacher extends Component {
 
     async getNotesModules(modules) {
         let modules_id = modules.map(module => module._id);
-        console.log(modules_id);
         const response = await request(
             `/notes/modules`,
             this.props.user.token,
@@ -52,7 +50,7 @@ class DashboardTeacher extends Component {
                 body: modules_id
             }
         );
-        console.log(response);
+        console.log('notes', response);
         if (this.responseManagment(response) && response.result.length) {
             modules = modules.map(module => {
                 module.notes = response.result.filter(

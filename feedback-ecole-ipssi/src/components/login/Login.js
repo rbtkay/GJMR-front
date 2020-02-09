@@ -39,7 +39,7 @@ class Login extends Component {
             undefined, 
             { method: "POST", body }
         );
-        console.log(response);
+        console.log('user', response);
         if (this.responseManagment(response)) {
             const user = response.result;
             this.props.setUser(user);

@@ -40,7 +40,7 @@ class AddModule extends Component {
             `/school-year`,
             this.props.user.token
         );
-        console.log(response_school_year);
+        console.log('school-year', response_school_year);
         if (this.responseManagment(response_school_year)) {
             options_school_year = response_school_year.result;
         }
@@ -48,7 +48,7 @@ class AddModule extends Component {
             `/users/role/teacher`,
             this.props.user.token
         );
-        console.log(response_teachers);
+        console.log('teachers', response_teachers);
         if (this.responseManagment(response_teachers)) {
             options_teacher = response_teachers.result;
         }
@@ -62,7 +62,6 @@ class AddModule extends Component {
 
     async postModule(body) {
         this.setState({ loading: true });
-        console.log(body);
         let response = await request(`/modules`, this.props.user.token, {
             method: "POST",
             body
