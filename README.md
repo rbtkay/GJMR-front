@@ -1,7 +1,7 @@
 # feedback-ecole-ipssi-front
-## To launch project : 
-To start docker container :
+## Pour lancer le projet :
 ```
 docker-compose up
 ```
-Need feedback-ecole-ipssi-front to be docker-composed up to start
+Aller sur localhost:4200 pour voir l'application.<br/>
+Pour fonctionner l'application à besoin que l'API, soit lancé. Celle-ci est disponible en clonant : https://github.com/rbtkay/feedback-ecole-ipssi-back.git

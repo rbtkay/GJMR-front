@@ -34,15 +34,13 @@ class ModuleNotation extends Component {
             body
         });
         console.log(response);
-        if (response.status === 201 || response.status === 200) {
+        if (responseManagment(response)) {
             console.log("note inserted");
             this.props.setLog({
                 type: "success",
                 message: "Note ajoutée."
             });
             this.props.updateModule(body, this.props.module._id);
-        } else if (response.status === 403) {
-            this.props.history.push("/login");
         }
     }
 

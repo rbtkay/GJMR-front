@@ -32,7 +32,7 @@ export function request(url, token, options = {}) {
  * @returns {boolean}
  */
 export function responseManagment(response) {
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201 || response.status === 203) {
         delete response.status;
         return true;
     } else {

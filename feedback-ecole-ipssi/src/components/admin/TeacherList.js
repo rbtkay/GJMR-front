@@ -50,6 +50,10 @@ class TeacherList extends Component {
                     teacher => teacher._id !== id
                 )
             });
+            this.props.setLog({
+                type: "success",
+                message: "Intervenant supprimé."
+            });
         }
     }
 

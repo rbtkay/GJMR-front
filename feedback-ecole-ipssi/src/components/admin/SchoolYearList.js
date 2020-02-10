@@ -51,6 +51,10 @@ class SchoolYearList extends Component {
                     school_year => school_year._id !== id
                 )
             });
+            this.props.setLog({
+                type: "success",
+                message: "Module supprimé."
+            });
         }
     }
 

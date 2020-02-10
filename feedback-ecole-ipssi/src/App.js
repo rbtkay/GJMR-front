@@ -22,23 +22,12 @@ class App extends Component {
 
     UNSAFE_componentWillMount() {
         const user = JSON.parse(localStorage.getItem(STORED_USER));
-        if (!user) {
-            if (this.props.location.pathname !== "login") {
-                this.props.history.push("/login");
-            }
-        } else {
+        if (user) {
             this.props.setUser(user);
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // if (
-        //     !this.props.user &&
-        //     prevProps.location.pathname !== this.props.location.pathname &&
-        //     this.props.location.pathname !== "login"
-        // ) {
-        //     this.props.history.push("/login");
-        // }
         // Logs
         if (
             this.props.log &&

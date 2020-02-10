@@ -99,6 +99,10 @@ class ModuleList extends Component {
             this.setState({
                 modules: this.state.modules.filter(module => module._id !== id)
             });
+            this.props.setLog({
+                type: "success",
+                message: "Module supprimé."
+            });
         }
     }
 
