@@ -32,13 +32,13 @@ class App extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (
-            !this.props.user &&
-            prevProps.location.pathname !== this.props.location.pathname &&
-            this.props.location.pathname === "login"
-        ) {
-            this.props.history.push("/login");
-        }
+        // if (
+        //     !this.props.user &&
+        //     prevProps.location.pathname !== this.props.location.pathname &&
+        //     this.props.location.pathname !== "login"
+        // ) {
+        //     this.props.history.push("/login");
+        // }
         // Logs
         if (
             this.props.log &&

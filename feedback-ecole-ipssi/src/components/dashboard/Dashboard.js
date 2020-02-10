@@ -30,14 +30,14 @@ class Dashboard extends Component {
                     </Route>
                     {/* Redirection */}
                     <Route path="/dashboard">
-                        <Redirect to={`/dashboard${this.props.user.role}`} />
+                        <Redirect to={`/dashboard/${this.props.user.role}`} />
                     </Route>
                 </Switch>
             </main>
         );
     }
 }
-
+ 
 const mapStateToProps = state => {
     return { user: state.user };
 };
