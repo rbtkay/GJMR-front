@@ -104,13 +104,13 @@ class Dashboard extends Component {
 
     updateModule(note, module_id) {
         console.log("module update");
-        this.setState(
-            this.state.modules.map(module => {
-                if (module._id === module_id) {
-                    module.note = note;
-                }
-            })
-        );
+        let modules = this.state.modules.map(module => {
+            if (module._id === module_id) {
+                module.note = note;
+            }
+            return module;
+        });
+        this.setState({ modules });
     }
 
     render() {

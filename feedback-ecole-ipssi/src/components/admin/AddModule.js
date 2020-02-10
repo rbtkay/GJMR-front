@@ -9,7 +9,6 @@ import Loading from "../Loading";
 import { setLog } from "../../reducer/actions";
 // functions
 import { request, responseManagment } from "../../functions/fetch";
-import { STORED_USER } from "../../constants/index";
 
 class AddModule extends Component {
     constructor(props) {
@@ -28,7 +27,7 @@ class AddModule extends Component {
 
     UNSAFE_componentWillMount() {
         if (this.props.user.role !== 'admin') {
-            this.props.history.push(`/${this.props.user.role}/dashboard`);
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
         this.getSelectsValues();
     }
@@ -65,7 +64,6 @@ class AddModule extends Component {
     }
 
     async postModule(body) {
-        console.log("props on postModule", this.props)
         if (this.props.user.token == null)
             this.props.history.push(`/login`);
 
@@ -75,6 +73,10 @@ class AddModule extends Component {
         });
         if (response.status === 201) {
             console.log("module inserted");
+            this.props.setLog({
+                type: "success",
+                message: "Module ajouté."
+            });
         } else if (response.status === 403) {
             localStorage.clear();
             this.props.history.push(`/login`);
@@ -88,7 +90,7 @@ class AddModule extends Component {
 
     render() {
         return (
-            <main class="main-form">
+            <main className="main-form">
                 <h1>Nouveau Module</h1>
                 <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
                 {this.state.loading ?

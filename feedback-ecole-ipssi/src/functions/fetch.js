@@ -56,7 +56,7 @@ export function responseErrorManagment(response) {
         });
     } else {
         console.error(
-            "La connexion avec le serveur n' a pas pu être effectuée"
+            "La connexion avec le serveur n'a pas pu être effectuée"
         );
         this.props.setLog({
             type: "error",

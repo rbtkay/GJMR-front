@@ -98,11 +98,8 @@ class DashboardAdmin extends Component {
                         <SchoolYearList />
                     </Route>
                     {/* Redirection */}
-                    <Route exact path="/dashboard/admin">
-                        <Redirect to={`/dashboard/admin/modules`} />
-                    </Route>
                     <Route path="/dashboard/admin">
-                        <Redirect to={`/404`} />
+                        <Redirect to={`/dashboard/admin/modules`} />
                     </Route>
                 </Switch>
             </Fragment>

@@ -10,7 +10,7 @@ import DashboardTeacher from "./DashboardTeacher";
 class Dashboard extends Component {
     UNSAFE_componentWillMount() {
         if (this.props.user.role !== this.props.match.params.role) {
-            this.props.history.push(`/${this.props.user.role}/dashboard`);
+            this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
     }
 
@@ -30,7 +30,7 @@ class Dashboard extends Component {
                     </Route>
                     {/* Redirection */}
                     <Route path="/dashboard">
-                        <Redirect to={`/404`} />
+                        <Redirect to={`/dashboard${this.props.user.role}`} />
                     </Route>
                 </Switch>
             </main>

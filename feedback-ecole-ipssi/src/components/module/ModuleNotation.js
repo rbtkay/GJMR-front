@@ -29,21 +29,20 @@ class ModuleNotation extends Component {
     }
 
     async postNote(body) {
-
-        if (body.value > 20 || body.value < 0) {
-            // set log
-        } else {
-            const response = await request(`/notes`, this.props.user.token, {
-                method: "POST",
-                body
+        const response = await request(`/notes`, this.props.user.token, {
+            method: "POST",
+            body
+        });
+        console.log(response);
+        if (response.status === 201 || response.status === 200) {
+            console.log("note inserted");
+            this.props.setLog({
+                type: "success",
+                message: "Note ajoutée."
             });
-            console.log(response);
-            if (response.status === 201 || response.status === 200) {
-                console.log("note inserted");
-                this.props.updateModule(body, this.props.module._id);
-            }else if(response.status === 403){
-                this.props.history.push("/login");
-            }
+            this.props.updateModule(body, this.props.module._id);
+        } else if (response.status === 403) {
+            this.props.history.push("/login");
         }
     }
 

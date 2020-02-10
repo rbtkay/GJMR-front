@@ -12,8 +12,17 @@ class Form extends Component {
 
         this.initialState = {};
         props.form_items.forEach(form_item => {
-            this.initialState[form_item.name] =
-                form_item.type === "hidden" ? form_item.value : "";
+            switch (form_item.type) {
+                case "hidden":
+                    this.initialState[form_item.name] = form_item.value;
+                    break;
+                case "select":
+                    this.initialState[form_item.name] =
+                        form_item.options[0]._id;
+                    break;
+                default:
+                    this.initialState[form_item.name] = "";
+            }
         });
         this.state = this.initialState;
 
@@ -33,6 +42,7 @@ class Form extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
+        console.log(this.state);
         this.props.callback({ ...this.state });
         this.resetInputs();
     }
@@ -50,7 +60,7 @@ class Form extends Component {
                                     <SelectItem
                                         key={i}
                                         select={form_item}
-                                        value={this.state[form_item.name] || ""}
+                                        value={this.state[form_item.name]}
                                         callback={this.handleChange}
                                     />
                                 );
@@ -59,7 +69,7 @@ class Form extends Component {
                                     <FormItem
                                         key={i}
                                         input={form_item}
-                                        value={this.state[form_item.name] || ""}
+                                        value={this.state[form_item.name]}
                                         callback={this.handleChange}
                                     />
                                 );
