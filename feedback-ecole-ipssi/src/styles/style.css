@@ -19,6 +19,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  position: relative;
 }
 
 main {
@@ -454,6 +455,53 @@ table.modules td a:before {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
+  }
+}
+
+.user-log-wrapper {
+  position: absolute;
+  z-index: 1000;
+  top: 130px;
+  left: 0;
+  right: 0;
+  padding: 15px 15px 0;
+  text-align: center;
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.user-log-wrapper .user-log {
+  -webkit-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+  padding: 8px 30px;
+  border-radius: 10px;
+  opacity: 1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.user-log-wrapper .user-log.success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.user-log-wrapper .user-log.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.user-log-wrapper.hidden .user-log {
+  opacity: 0;
+}
+
+@media screen and (max-width: 1200px) {
+  .user-log-wrapper {
+    max-width: 100%;
   }
 }
 /*# sourceMappingURL=style.css.map */

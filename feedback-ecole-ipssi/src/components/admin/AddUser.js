@@ -9,7 +9,6 @@ import Loading from "../Loading";
 import { setLog } from "../../reducer/actions";
 // functions
 import { request, responseManagment } from "../../functions/fetch";
-import { STORED_USER } from "../../constants/index";
 
 class AddUser extends Component {
     constructor(props) {
@@ -59,6 +58,10 @@ class AddUser extends Component {
             console.log("response", response);
             if (response.status === 201 || response.status === 200) {
                 console.log("user inserted");
+                this.props.setLog({
+                    type: "success",
+                    message: "Utilisateur ajouté."
+                });
             } else if (response.status === 403) {
                 localStorage.clear();
                 this.props.history.push(`/login`);
@@ -108,7 +111,7 @@ class AddUser extends Component {
         }
 
         return (
-            <main class="main-form">
+            <main className="main-form">
                 <h1>Nouvel {this.props.match.params.role}</h1>
                 <button className="back-btn" onClick={this.goBack}>
                     Retour
