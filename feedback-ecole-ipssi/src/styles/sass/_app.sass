@@ -39,7 +39,7 @@ header
         font-size: 25px
         margin-bottom: 0px
     .user-name
-        text-transform: uppercase
+        text-transform: capitalize
         margin-right: 15px
         text-decoration: none
     .header-right
@@ -105,19 +105,19 @@ nav
                 text-transform: uppercase
                 font-weight: 700
                 letter-spacing: 1px 
-                &:active
+                padding: 5px 10px
+                &.active
                     color: white
-                    padding: 5px 10px
                     background-color: #e42761     
 
 
-.section-list
+.section-list, .module-list
     max-width: 1080px
     margin: auto
     h2
         text-align: center
 
-.table-list
+.table-list, .modules
     text-align: center
     width: 100%
     th

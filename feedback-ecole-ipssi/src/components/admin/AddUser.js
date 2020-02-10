@@ -112,10 +112,9 @@ class AddUser extends Component {
 
         return (
             <main className="main-form">
-                <h1>Nouvel {this.props.match.params.role}</h1>
-                <button className="back-btn" onClick={this.goBack}>
-                    Retour
-                </button>
+                {/* <h1>Nouvel {this.props.match.params.role}</h1> */}
+                <h1>Nouvel étudiant</h1>
+                <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
                 {this.state.loading ? (
                     <Loading />
                 ) : (
