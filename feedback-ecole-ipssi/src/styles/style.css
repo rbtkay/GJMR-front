@@ -242,7 +242,6 @@ nav.lists ul li a.active {
 
 .login .form .form-item input, .login .form .select-item input, .main-form .form .form-item input, .main-form .form .select-item input {
   padding: 10px;
-  text-align: center;
   font-size: 16px;
 }
 
