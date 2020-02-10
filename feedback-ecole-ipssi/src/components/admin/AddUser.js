@@ -48,24 +48,23 @@ class AddUser extends Component {
     }
 
     async postUser(body) {
-        if (this.props.user.token == null) {
-            this.props.history.push(`/login`);
-        } else {
-            const response = await request(`/user`, this.props.user.token, {
-                method: "POST",
-                body
+        this.setState({ loading: true });
+        const response = await request(`/user`, this.props.user.token, {
+            method: "POST",
+            body
+        });
+        console.log("response", response);
+        if (responseManagment(response)) {
+            console.log("user inserted");
+            this.props.setLog({
+                type: "success",
+                message: "Utilisateur ajouté."
             });
-            console.log("response", response);
-            if (response.status === 201 || response.status === 200) {
-                console.log("user inserted");
-                this.props.setLog({
-                    type: "success",
-                    message: "Utilisateur ajouté."
-                });
-            } else if (response.status === 403) {
-                localStorage.clear();
-                this.props.history.push(`/login`);
-            }
+            this.props.history.push(
+                `/dashboard/admin/${this.props.match.params.role}`
+            );
+        } else {
+            this.setState({ loading: false });
         }
     }
 
@@ -114,7 +113,9 @@ class AddUser extends Component {
             <main className="main-form">
                 {/* <h1>Nouvel {this.props.match.params.role}</h1> */}
                 <h1>Nouvel étudiant</h1>
-                <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
+                <a className="back-btn" href="#" onClick={this.goBack}>
+                    Retour
+                </a>
                 {this.state.loading ? (
                     <Loading />
                 ) : (

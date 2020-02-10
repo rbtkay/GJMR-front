@@ -26,7 +26,7 @@ class AddModule extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        if (this.props.user.role !== 'admin') {
+        if (this.props.user.role !== "admin") {
             this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
         this.getSelectsValues();
@@ -43,7 +43,7 @@ class AddModule extends Component {
             `/school-year`,
             this.props.user.token
         );
-        console.log('school-year', response_school_year);
+        console.log("school-year", response_school_year);
         if (this.responseManagment(response_school_year)) {
             options_school_year = response_school_year.result;
         }
@@ -51,7 +51,7 @@ class AddModule extends Component {
             `/users/role/teacher`,
             this.props.user.token
         );
-        console.log('teachers', response_teachers);
+        console.log("teachers", response_teachers);
         if (this.responseManagment(response_teachers)) {
             options_teacher = response_teachers.result;
         }
@@ -64,24 +64,20 @@ class AddModule extends Component {
     }
 
     async postModule(body) {
-        if (this.props.user.token == null)
-            this.props.history.push(`/login`);
-
-        let response = await request(`/modules`, this.props.user.token, {
+        const response = await request(`/modules`, this.props.user.token, {
             method: "POST",
             body
         });
-        if (response.status === 201) {
+        if (responseManagment(response)) {
             console.log("module inserted");
             this.props.setLog({
                 type: "success",
                 message: "Module ajouté."
             });
-        } else if (response.status === 403) {
-            localStorage.clear();
-            this.props.history.push(`/login`);
+            this.props.history.push(`/dashboard/admin/modules`);
+        } else {
+            this.setState({ loading: false });
         }
-        this.setState({ loading: false });
     }
 
     goBack(evt) {
@@ -92,10 +88,12 @@ class AddModule extends Component {
         return (
             <main className="main-form">
                 <h1>Nouveau Module</h1>
-                <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
-                {this.state.loading ?
+                <a className="back-btn" href="#" onClick={this.goBack}>
+                    Retour
+                </a>
+                {this.state.loading ? (
                     <Loading />
-                    :
+                ) : (
                     <Form
                         form_items={[
                             {
@@ -120,7 +118,8 @@ class AddModule extends Component {
                             }
                         ]}
                         callback={this.postModule}
-                    />}
+                    />
+                )}
             </main>
         );
     }

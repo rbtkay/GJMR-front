@@ -1,11 +1,14 @@
+// modules
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+// components
 import Form from "../form/Form";
-import { request } from "../../functions/fetch";
-import { setLog } from "../../reducer/actions";
 import Loading from "../Loading";
-
+// actions
+import { setLog } from "../../reducer/actions";
+// functions
+import { request, responseManagment } from "../../functions/fetch";
 
 class AddSchoolYear extends Component {
     constructor(props) {
@@ -19,7 +22,7 @@ class AddSchoolYear extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        if (this.props.user.role !== 'admin') {
+        if (this.props.user.role !== "admin") {
             this.props.history.push(`/dashboard/${this.props.user.role}`);
         }
     }
@@ -36,17 +39,16 @@ class AddSchoolYear extends Component {
             method: "POST",
             body: new_school_year
         });
-        if (response.status === 201) {
+        if (responseManagment(response)) {
             console.log("schoolyear inserted");
             this.props.setLog({
                 type: "success",
                 message: "Promotion ajoutée."
             });
-        } else if (response.status === 403) {
-            localStorage.clear();
-            this.props.history.push(`/login`);
+            this.props.history.push(`/dashboard/admin/school-year`);
+        } else {
+            this.setState({ loading: false });
         }
-        this.setState({ loading: false });
     }
 
     goBack(evt) {
@@ -57,7 +59,9 @@ class AddSchoolYear extends Component {
         return (
             <main className="main-form">
                 <h1>Nouvelle Session</h1>
-                <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
+                <a className="back-btn" href="#" onClick={this.goBack}>
+                    Retour
+                </a>
 
                 {this.state.loading ? (
                     <Loading />

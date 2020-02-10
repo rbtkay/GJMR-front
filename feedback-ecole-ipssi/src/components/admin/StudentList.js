@@ -50,6 +50,11 @@ class StudentList extends Component {
                     student => student._id !== id
                 )
             });
+
+            this.props.setLog({
+                type: "success",
+                message: "Étudiant supprimé."
+            });
         }
     }
 

@@ -16,40 +16,56 @@ import AddSchoolYear from "./admin/AddSchoolYear";
 
 class Router extends Component {
     render() {
-        return (
-            <Switch>
-                <Route exact path="/login">
-                    <Login />
-                </Route>
-                <Route exact path="/logout">
-                    <Logout />
-                </Route>
-                <Route path="/dashboard/:role">
-                    <Dashboard/>
-                </Route>
-                <Route exact path="/modules/:id">
-                    <Module/>
-                </Route>
-                <Route exact path="/admin/add-user/:role">
-                    <AddUser />
-                </Route>
-                <Route exact path="/admin/add-module/">
-                    <AddModule />
-                </Route>
-                <Route exact path="/admin/add-school-year/">
-                    <AddSchoolYear />
-                </Route>
-                <Route exact path="/404">
-                    <Page404/>
-                </Route>
-                <Route exact path="/">
-                    {this.props.user ? <Redirect to={`/dashboard/${this.props.user.role}`} />  : <Redirect to={`/login`} />}
-                </Route>
-                <Route path="/">
-                    <Redirect to={`/404`} />
-                </Route>
-            </Switch>
-        );
+        if (this.props.user) {
+            return (
+                <Switch>
+                    <Route exact path="/logout">
+                        <Logout />
+                    </Route>
+                    <Route path="/dashboard/:role">
+                        <Dashboard />
+                    </Route>
+                    <Route exact path="/modules/:id">
+                        <Module />
+                    </Route>
+                    <Route exact path="/admin/add-user/:role">
+                        <AddUser />
+                    </Route>
+                    <Route exact path="/admin/add-module/">
+                        <AddModule />
+                    </Route>
+                    <Route exact path="/admin/add-school-year/">
+                        <AddSchoolYear />
+                    </Route>
+                    <Route exact path="/404">
+                        <Page404 />
+                    </Route>
+                    <Route exact path="/">
+                        <Redirect to={`/dashboard/${this.props.user.role}`} />
+                    </Route>
+                    <Route path="/">
+                        <Redirect to={`/404`} />
+                    </Route>
+                </Switch>
+            );
+        } else {
+            return (
+                <Switch>
+                    <Route exact path="/login">
+                        <Login />
+                    </Route>
+                    <Route exact path="/404">
+                        <Page404 />
+                    </Route>
+                    <Route exact path="/">
+                        <Redirect to={`/login`} />
+                    </Route>
+                    <Route path="/">
+                        <Redirect to={`/404`} />
+                    </Route>
+                </Switch>
+            );
+        }
     }
 }
 
@@ -58,6 +74,3 @@ const mapStateToProps = state => {
 };
 
 export default withRouter(connect(mapStateToProps)(Router));
-
-
-
