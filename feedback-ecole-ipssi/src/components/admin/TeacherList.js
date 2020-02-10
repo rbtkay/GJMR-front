@@ -55,14 +55,14 @@ class TeacherList extends Component {
 
     render() {
         return (
-            <section className="teacher-list">
+            <section className="teacher-list section-list">
                 <h2>Liste des intervenants</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.teachers.length ? (
                     <Table
-                        className="teachers"
-                        labels={["Nom", "Prénom", "Email", ""]}
+                        className="teachers table-list"
+                        labels={["Nom", "Prénom", "Email", "Action"]}
                     >
                         {this.state.teachers.map((teacher, i) => (
                             <tr key={i}>

@@ -58,7 +58,7 @@ class AddSchoolYear extends Component {
 
     render() {
         return (
-            <main>
+            <main class="main-form">
                 <h1>Nouveau Module</h1>
                 <button className="back-btn" onClick={this.goBack}>
                     Retour
