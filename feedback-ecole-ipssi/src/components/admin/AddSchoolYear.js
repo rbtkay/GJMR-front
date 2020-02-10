@@ -56,10 +56,9 @@ class AddSchoolYear extends Component {
     render() {
         return (
             <main className="main-form">
-                <h1>Nouveau Module</h1>
-                <button className="back-btn" onClick={this.goBack}>
-                    Retour
-                </button>
+                <h1>Nouvelle Session</h1>
+                <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
+
                 {this.state.loading ? (
                     <Loading />
                 ) : (
