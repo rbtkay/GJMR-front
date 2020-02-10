@@ -88,9 +88,9 @@ class AddModule extends Component {
 
     render() {
         return (
-            <main>
+            <main class="main-form">
                 <h1>Nouveau Module</h1>
-                <button className="back-btn" onClick={this.goBack}>Retour</button>
+                <a className="back-btn" href="#" onClick={this.goBack}>Retour</a>
                 {this.state.loading ?
                     <Loading />
                     :

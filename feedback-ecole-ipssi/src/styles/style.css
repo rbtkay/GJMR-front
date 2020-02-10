@@ -22,14 +22,14 @@ body {
 }
 
 main {
-  padding: 15px;
+  padding: 0 15px;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
 header {
-  padding: 15px;
+  padding: 20px 0 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -38,9 +38,30 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+}
+
+header .logo {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  padding: 15px 0px;
+  height: 100%;
+}
+
+header .logo img {
+  height: 100%;
+}
+
+header blockquote {
+  text-transform: uppercase;
+  font-size: 25px;
+  margin-bottom: 0px;
 }
 
 header .user-name {
@@ -49,8 +70,35 @@ header .user-name {
   text-decoration: none;
 }
 
-header .header-rigth {
-  margin: 15px 0;
+header .header-right {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+header .header-right .user-name {
+  margin-right: 0;
+}
+
+header .header-right .cta-logout {
+  background-color: #e42761;
+  text-decoration: none;
+  margin-top: 10px;
+  padding: 5px 15px;
+  color: white;
+  border-radius: 20px;
 }
 
 footer {
@@ -86,6 +134,149 @@ nav ul li {
   list-style-type: none;
 }
 
+nav.creation ul, nav.lists ul {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+nav.creation ul li a, nav.lists ul li a {
+  text-decoration: none;
+  -webkit-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
+}
+
+nav.creation {
+  max-width: 1080px;
+  text-align: center;
+  margin: auto;
+}
+
+nav.creation ul {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  border-bottom: 1px solid #cecece;
+  padding-bottom: 15px;
+}
+
+nav.lists ul li a {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+nav.lists ul li a:active {
+  color: white;
+  padding: 5px 10px;
+  background-color: #e42761;
+}
+
+.section-list {
+  max-width: 1080px;
+  margin: auto;
+}
+
+.section-list h2 {
+  text-align: center;
+}
+
+.table-list {
+  text-align: center;
+  width: 100%;
+}
+
+.table-list th {
+  padding: 20px 15px;
+}
+
+.table-list td {
+  padding: 10px 15px;
+}
+
+.table-list button {
+  margin-bottom: 0;
+}
+
+/* FORM LOGIN, FORM COMMON*/
+.login .back-btn, .main-form .back-btn {
+  max-width: 1080px;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-decoration: none;
+}
+
+.login .back-btn:before, .main-form .back-btn:before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 15px;
+  background-position: center;
+  background: url(/images/back.svg);
+}
+
+.login .form, .main-form .form {
+  max-width: 1080px;
+  margin: auto;
+  text-align: center;
+}
+
+.login .form .form-item, .login .form .select-item, .main-form .form .form-item, .main-form .form .select-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 500px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.login .form .form-item input, .login .form .select-item input, .main-form .form .form-item input, .main-form .form .select-item input {
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.login .form .form-item input, .login .form .select-item input, .main-form .form .form-item input, .main-form .form .select-item input {
+  width: 300px;
+  margin: auto;
+}
+
+.login .form .form-item label, .login .form .select-item label, .main-form .form .form-item label, .main-form .form .select-item label {
+  width: 150px;
+  margin: auto;
+}
+
+.login .form .form-item #school_year_id, .login .form .form-item #teacher_id, .login .form .select-item #school_year_id, .login .form .select-item #teacher_id, .main-form .form .form-item #school_year_id, .main-form .form .form-item #teacher_id, .main-form .form .select-item #school_year_id, .main-form .form .select-item #teacher_id {
+  width: 300px;
+  height: 42px;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.login .form .submit-button-wrapper, .main-form .form .submit-button-wrapper {
+  margin-top: 30px;
+}
+
+.login .form .submit-button-wrapper .submit-button, .main-form .form .submit-button-wrapper .submit-button {
+  width: 150px;
+  height: 30px;
+  font-size: 16px;
+  background-color: #0476BB;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* A FINIR ...*/
 a {
   color: black;
 }

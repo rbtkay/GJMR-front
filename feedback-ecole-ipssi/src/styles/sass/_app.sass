@@ -13,21 +13,51 @@ body
     flex-direction: column
 
 main
-    padding: 15px
+    padding: 0 15px
     flex-grow: 1
 
 header
-    padding: 15px
+    padding: 20px 0 10px
     display: flex
     flex-wrap: wrap
     align-items: center
-    justify-content: space-between
+    justify-content: center
+    position: relative
+    .logo
+        position: absolute
+        top: 50%
+        left: 15px
+        transform: translateY(-50%)
+        padding: 15px 0px
+        height: 100%
+        img
+            height: 100%
+
+    blockquote
+        text-transform: uppercase
+        font-size: 25px
+        margin-bottom: 0px
     .user-name
-        text-transform: capitalize
+        text-transform: uppercase
         margin-right: 15px
         text-decoration: none
-    .header-rigth
-        margin: 15px 0
+    .header-right
+        position: absolute
+        top: 50%
+        right: 15px
+        transform: translateY(-50%)
+        display: flex
+        flex-direction: column
+        align-items: flex-end
+        .user-name
+            margin-right: 0
+        .cta-logout
+            background-color: #e42761
+            text-decoration: none
+            margin-top: 10px
+            padding: 5px 15px
+            color: white
+            border-radius: 20px
 
 footer
     background-color: $dark_blue
@@ -51,6 +81,108 @@ nav ul
     li
         padding: 5px 10px
         list-style-type: none
+
+
+nav
+    &.creation, &.lists
+        ul
+            justify-content: center
+            li a
+                text-decoration: none
+                transition: all ease-in-out 0.2s
+    &.creation
+        max-width: 1080px
+        text-align: center
+        margin: auto
+        ul
+            display: inline-flex
+            border-bottom: 1px solid #cecece
+            padding-bottom: 15px
+    &.lists
+        ul
+            li a
+                text-transform: uppercase
+                font-weight: 700
+                letter-spacing: 1px 
+                &:active
+                    color: white
+                    padding: 5px 10px
+                    background-color: #e42761     
+
+
+.section-list
+    max-width: 1080px
+    margin: auto
+    h2
+        text-align: center
+
+.table-list
+    text-align: center
+    width: 100%
+    th
+        padding: 20px 15px
+    td
+        padding: 10px 15px
+    button
+        margin-bottom: 0
+
+/* FORM LOGIN, FORM COMMON*/
+.login, .main-form
+    .back-btn
+        max-width: 1080px
+        margin: auto
+        display: flex
+        align-items: center
+        text-decoration: none
+        
+        &:before
+            content: ''
+            display: inline-block
+            width: 15px
+            height: 15px
+            margin-right: 15px
+            background-position: center
+            background: url(/images/back.svg)
+    .form
+        max-width: 1080px
+        margin: auto
+        text-align: center
+        .form-item, .select-item
+            display: flex
+            max-width: 500px
+            align-items: center
+            margin: auto
+            margin-bottom: 20px
+            input
+                padding: 10px
+                text-align: center
+                font-size: 16px
+            input
+                width: 300px
+                margin: auto
+            label 
+                width: 150px
+                margin: auto
+            #school_year_id, #teacher_id
+                width: 300px
+                height: 42px
+                margin: 0 10px
+                font-size: 16px
+            
+
+
+        .submit-button-wrapper
+            margin-top: 30px
+            .submit-button
+                width: 150px
+                height: 30px
+                font-size: 16px
+                background-color: #0476BB
+                color: white
+                border: none
+                cursor: pointer
+
+/* A FINIR ...*/
 
 a
     color: black

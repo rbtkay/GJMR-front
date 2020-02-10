@@ -21,11 +21,16 @@ class DashboardAdmin extends Component {
                 <nav className="creation">
                     <ul>
                         <li>
+                            <Link to={`/admin/add-module`} className="btn">
+                                Ajouter un module
+                            </Link>
+                        </li>
+                        <li>
                             <Link
                                 to={`/admin/add-user/student`}
                                 className="btn"
                             >
-                                Ajouter un eleve
+                                Ajouter un étudiant
                             </Link>
                         </li>
                         <li>
@@ -34,11 +39,6 @@ class DashboardAdmin extends Component {
                                 className="btn"
                             >
                                 Ajouter un intervenant
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={`/admin/add-module`} className="btn">
-                                Ajouter un module
                             </Link>
                         </li>
                         <li>
@@ -63,7 +63,7 @@ class DashboardAdmin extends Component {
                                 to={`/dashboard/admin/student`}
                                 className="btn"
                             >
-                                Étudiant
+                                Étudiants
                             </NavLink>
                         </li>
                         <li>
@@ -79,7 +79,7 @@ class DashboardAdmin extends Component {
                                 to={`/dashboard/admin/school-year`}
                                 className="btn"
                             >
-                                Promotions
+                                Sessions
                             </NavLink>
                         </li>
                     </ul>

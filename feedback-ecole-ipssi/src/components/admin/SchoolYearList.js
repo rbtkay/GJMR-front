@@ -56,14 +56,14 @@ class SchoolYearList extends Component {
 
     render() {
         return (
-            <section className="school-year-list">
+            <section className="school-year-list section-list">
                 <h2>Liste des promotions</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.school_years.length ? (
                     <Table
-                        className="school-years"
-                        labels={["Nom", "Date de début", "Date de fin", ""]}
+                        className="school-years table-list"
+                        labels={["Nom", "Date de début", "Date de fin", "Action"]}
                     >
                         {this.state.school_years.map((school_year, i) => (
                             <tr key={i}>

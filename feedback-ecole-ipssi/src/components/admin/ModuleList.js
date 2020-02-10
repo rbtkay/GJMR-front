@@ -104,14 +104,14 @@ class ModuleList extends Component {
 
     render() {
         return (
-            <section className="module-list">
+            <section className="module-list section-list">
                 <h2>Liste des modules</h2>
                 {this.state.loading ? (
                     <Loading />
                 ) : this.state.modules.length ? (
                     <Table
-                        className="modules"
-                        labels={["Nom", "Intervenant", "Moyenne", ""]}
+                        className="modules table-list"
+                        labels={["Nom", "Intervenant", "Moyenne", "Action"]}
                     >
                         {this.state.modules.map((module, i) => (
                             <tr key={i}>

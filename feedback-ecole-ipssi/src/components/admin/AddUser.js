@@ -108,7 +108,7 @@ class AddUser extends Component {
         }
 
         return (
-            <main>
+            <main class="main-form">
                 <h1>Nouvel {this.props.match.params.role}</h1>
                 <button className="back-btn" onClick={this.goBack}>
                     Retour
