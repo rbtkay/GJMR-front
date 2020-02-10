@@ -1,6 +1,7 @@
 // modules
 import React, { Component } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 // components
 import Login from "./login/Login";
 import Logout from "./login/Logout";
@@ -41,7 +42,9 @@ class Router extends Component {
                 <Route exact path="/404">
                     <Page404/>
                 </Route>
-                {/* Redirection */}
+                <Route exact path="/">
+                    {this.props.user ? <Redirect to={`/dashboard/${this.props.user.role}`} />  : <Redirect to={`/login`} />}
+                </Route>
                 <Route path="/">
                     <Redirect to={`/404`} />
                 </Route>
@@ -50,4 +53,11 @@ class Router extends Component {
     }
 }
 
-export default withRouter(Router);
+const mapStateToProps = state => {
+    return { user: state.user };
+};
+
+export default withRouter(connect(mapStateToProps)(Router));
+
+
+
